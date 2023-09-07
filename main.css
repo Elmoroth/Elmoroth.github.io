@@ -430,3 +430,7 @@ a:hover, a:visited, a:link, a:active
     max-width:100%;
     mix-blend-mode: multiply;
 }
+.birdcontainer  {
+    display: flex;
+    flex-flow: row wrap;
+}
