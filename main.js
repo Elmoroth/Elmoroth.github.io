@@ -4,7 +4,6 @@ function readFamilies(json) {
 
     values = json.values;
     values.reduce(makeTree, '');
-    $( '#list' ).toggle();
 }
 
 function displayMenu(json) {
@@ -364,6 +363,10 @@ function toggleMenu(){
     var el = document.getElementById("familymenu");
     el.classList.toggle("hidden");
     el.classList.toggle("famvis");
+}
+function toggleTree(){
+    $( '#list' ).toggle();
+    $( '#tree' ).toggle();
 }
 function jump(e){
     

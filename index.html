@@ -14,15 +14,16 @@
 			<div class="header" style="overflow:hidden">
 				<div class="logo"><a href=""><img src="wallcreeper.png" style="height: 49px"></img></a></div>
 				<div id="ddmenu">Orders and Families</div>
+				<div id="treemenu">Tree</div>
 				<div class="total"><span id="cnt_top"></span></div>
 			</div>
 			<div id="familymenu" class="hidden">
 				<div class="mlist"></div>
 			</div>
-			<div id="list" class="hidden">
+			<div id="list">
 				<div class="spinning-loader"></div>
 			</div>
-			<div id="tree">
+			<div id="tree" class="hidden">
 				<div class="class">Tetrapoda</div>
 					<ul class="tree" id="Tetrapoda">
 					</ul>
@@ -30,12 +31,11 @@
 			</div>
 		</div>
 		<script src="https://sheets.googleapis.com/v4/spreadsheets/1HYJKxmv4lpKJsYdGJRusaM9ZlIJ9ksLPShxNDN9_tqk/values/Sheet2?alt=json&key=AIzaSyCS8VedcfE96MslUdLY34iSG0GSMdOaWu8&amp;callback=readFamilies" type="text/javascript"></script>
-		<!--
-			<script src="https://sheets.googleapis.com/v4/spreadsheets/1_V3GEOp0AFwA_73o6_XWcYYWxQWmogjgrS5Wq5xUedM/values/Main?alt=json&key=AIzaSyCS8VedcfE96MslUdLY34iSG0GSMdOaWu8&amp;callback=displayContent" type="text/javascript"></script>
-		//-->
+		<script src="https://sheets.googleapis.com/v4/spreadsheets/1_V3GEOp0AFwA_73o6_XWcYYWxQWmogjgrS5Wq5xUedM/values/Main?alt=json&key=AIzaSyCS8VedcfE96MslUdLY34iSG0GSMdOaWu8&amp;callback=displayContent" type="text/javascript"></script>
 		<script>
 			$( "#ddmenu" ).on( "click", function() {toggleMenu()});
 			$( ".mlink" ).on( "click", function() {toggleMenu()});
+			$( "#treemenu" ).on( "click", function() {toggleTree()});
 		</script>
 	</body>
 </html>
