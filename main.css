@@ -32,7 +32,12 @@ html {
     position: absolute;
     left: 0.5em;
 }
-#ddmenu {
+.menubar {
+    width: 15em;
+    display: flex;
+    justify-content: space-between;
+}
+.menuitem {
     padding: 0.75em 0em;
     color: #BE363A;
     cursor: pointer;

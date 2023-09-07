@@ -367,6 +367,8 @@ function toggleMenu(){
 function toggleTree(){
     $( '#list' ).toggle();
     $( '#tree' ).toggle();
+    $( '#treemenu' ).toggle();
+    $( '#listmenu' ).toggle();
 }
 function jump(e){
     
