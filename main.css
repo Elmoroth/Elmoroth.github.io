@@ -59,6 +59,12 @@ html {
     font-weight: bold;
     position: relative;
 }
+.superclass {
+    background-image: linear-gradient( to bottom, #97A098 30%, #E8DAD9 300% );
+}
+.class {
+    background-image: linear-gradient( to bottom, #97A098 30%, #E8DAD9 300% );
+}
 .superorder {
     background-image: linear-gradient( to bottom, #97A098 30%, #E8DAD9 300% );
 }

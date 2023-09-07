@@ -398,7 +398,7 @@ function makeTree(ls_html, item, index, arr){
         li = $("<li/>")
             .append(
                 $("<div/>")
-                .addClass(classname)
+                .addClass(classname.toLowerCase())
                 .append(
                     $("<span/>").addClass("famlatin").text(latin)
                 )
@@ -415,7 +415,7 @@ function makeTree(ls_html, item, index, arr){
             .append(
                 $("<div/>")
                     .attr("id", latinid)
-                    .addClass(classname)
+                    .addClass(classname.toLowerCase())
                     .append(
                         $("<span/>").addClass("famlatin").text(latin)
                     )
