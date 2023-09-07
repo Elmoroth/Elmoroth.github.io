@@ -1,4 +1,12 @@
 
+function readFamilies(json) {
+    displayMenu(json);
+
+    values = json.values;
+    values.reduce(makeTree, '');
+    $( '#list' ).toggle();
+}
+
 function displayMenu(json) {
     let ls_html = '';
     let ls_last_order = '';
@@ -361,3 +369,60 @@ function jump(e){
     
     toggleMenu()
 }
+
+
+function makeTree(ls_html, item, index, arr){
+    if( index == 0 ){return ''};
+    let parentclass = item[index,0] ? item[index,0] : '';
+    let latin = item[index,1] ? item[index,1] : '';
+    let classname = item[index,2] ? item[index,2] : 'subclass';
+    let english = item[index,3] ? item[index,3] : '';
+    let ls_next = '';
+    let la_nextitem = arr[index + 1];
+    if( la_nextitem ){
+        ls_next = la_nextitem[0] ;
+    }
+    
+    let latinid = latin;
+    if( item[index,5] == 'TRUE' ){
+        latin = '† '+latin;
+    }
+    
+    var li;
+    if( ls_next	== latinid ){
+        li = $("<li/>")
+            .append(
+                $("<div/>")
+                .addClass(classname)
+                .append(
+                    $("<span/>").addClass("famlatin").text(latin)
+                )
+                .append(
+                    $("<span/>").addClass("famenglish").text(english)
+                )
+            )
+            .append(
+                $("<ul/>", {"id":latinid})
+            )
+                    ;
+    } else {
+        li = $("<li/>")
+            .append(
+                $("<div/>")
+                    .attr("id", latinid)
+                    .addClass(classname)
+                    .append(
+                        $("<span/>").addClass("famlatin").text(latin)
+                    )
+                    .append(
+                        $("<span/>").addClass("famenglish").text(english)
+                    )
+            )
+            .append(
+                $("<ol/>")
+                    .addClass("birdcontainer")
+            );
+    }
+    $('#'+parentclass).append(li);
+    return ls_html;
+};
