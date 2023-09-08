@@ -425,12 +425,28 @@ a:hover, a:visited, a:link, a:active
     align-items: center;
     justify-content: center;
 }
+.smallimage_list {
+    width: 2.5rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1) 15% 85%, rgba(255,255,255,0));
+}
 .smallimage img {
     max-height:100%; 
     max-width:100%;
     mix-blend-mode: multiply;
 }
+.smallimage_list img {
+    max-height:2rem; 
+    max-width:2rem;
+    mix-blend-mode: multiply;
+}
 .birdcontainer  {
     display: flex;
     flex-flow: row wrap;
+}
+.lightgrey {
+    background-color: #d5d8d5;
 }

@@ -399,6 +399,15 @@ function makeTree(ls_html, item, index, arr){
             .append(
                 $("<div/>")
                 .addClass(classname.toLowerCase())
+                .addClass("mfamily")
+                .addClass("lightgrey")
+                .append(
+                    $("<span/>")
+                    .addClass(item[index,8] ? "smallimage_list": "")
+                    .append(
+                        item[index,8] ? $("<img/>").attr("src", "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/"+item[index,8]+"/160").attr("loading", "lazy") : ""
+                    )
+                )
                 .append(
                     $("<span/>").addClass("famlatin").text(latin)
                 )
@@ -414,14 +423,25 @@ function makeTree(ls_html, item, index, arr){
         li = $("<li/>")
             .append(
                 $("<div/>")
-                    .attr("id", latinid)
-                    .addClass(classname.toLowerCase())
+                .attr("id", latinid)
+                .addClass(classname.toLowerCase())
+                .addClass("mfamily")
+                .addClass("lightgrey")
+                .append(
+                    $("<span/>")
+                    .addClass(item[index,8] ? "smallimage_list": "")
                     .append(
-                        $("<span/>").addClass("famlatin").text(latin)
+                        item[index,8] ? $("<img/>").attr("src", "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/"+item[index,8]+"/160").attr("loading", "lazy") : ""
                     )
-                    .append(
-                        $("<span/>").addClass("famenglish").text(english)
-                    )
+                )
+                .append(
+                    $("<span/>")
+                    .addClass("famlatin").text(latin)
+                )
+                .append(
+                    $("<span/>")
+                    .addClass("famenglish").text(english)
+                )
             )
             .append(
                 $("<ol/>")

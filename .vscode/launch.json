@@ -5,9 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "firefox",
+            //"type": "firefox",
+            "type": "chrome",
             "request": "launch",
-            "reAttach": true,
+            //"reAttach": true,
             "name": "Launch index.html",
             "file": "${workspaceFolder}/index.html"
         }
