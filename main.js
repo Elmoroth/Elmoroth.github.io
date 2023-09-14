@@ -268,7 +268,7 @@ function loadFamily(){
                 data+= '<div class="pictures">'
                 data += '<a href="https://birdsoftheworld.org/bow/species/'+item[29]+'" target="_blank" class="imageblock">';
                 data += '<img ';
-                if(item[21] == 'EX' || item[21] == 'CR (PE)'){
+                if(item[21] == 'EX' || item[21] == 'CR (PE)' || item[21] == 'FO'){
                     data += 'style="opacity: 0.5" '
                 }
                 if(item[28] !== '#N/A' && item[28] !== '' && item[28] !== undefined){
@@ -289,7 +289,7 @@ function loadFamily(){
                             if(it[28] !== '#N/A' && it[28] !== '' && it[28] !== undefined){
                                 data += '<a href="https://birdsoftheworld.org/bow/species/'+it[29]+'" target="_blank" class="imageblock">';
                                 data += '<img ';
-                                if(it[21] == 'EX' || it[21] == 'CR (PE)'){
+                                if(it[21] == 'EX' || it[21] == 'CR (PE)' || it[21] == 'FO'){
                                     data += 'style="opacity: 0.5" '
                                 }
                                 data += 'src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/'+it[28]+'/160" loading="lazy"/>'
@@ -332,7 +332,7 @@ function loadFamily(){
                             }
                     }
                 }
-                if(item[21] !== 'EX' && item[21] !== 'CR (PE)'){
+                if(item[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
                     species ++;
                 }
                 break;
