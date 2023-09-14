@@ -54,7 +54,7 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                        if(it[21] !== 'EX' && it[21] !== 'CR (PE)' && it[21] !== 'FO'){
                             cnt ++;
                         }
                     }
@@ -74,7 +74,7 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                        if(it[21] !== 'EX' && it[21] !== 'CR (PE)' && it[21] !== 'FO'){
                             cnt ++;
                         }
                     }
@@ -94,7 +94,7 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                        if(it[21] !== 'EX' && it[21] !== 'CR (PE)' && it[21] !== 'FO'){
                             cnt ++;
                         }
                     }
@@ -114,7 +114,7 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                        if(it[21] !== 'EX' && it[21] !== 'CR (PE)' && it[21] !== 'FO'){
                             cnt ++;
                         }
                     }
@@ -134,7 +134,7 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                        if(it[21] !== 'EX' && it[21] !== 'CR (PE)' && it[21] !== 'FO'){
                             cnt ++;
                         }
                     }
@@ -154,7 +154,7 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                        if(it[21] !== 'EX' && it[21] !== 'CR (PE)' && it[21] !== 'FO'){
                             cnt ++;
                         }
                     }
@@ -177,7 +177,7 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                        if(it[21] !== 'EX' && it[21] !== 'CR (PE)' && it[21] !== 'FO'){
                             cnt ++;
                         }
                     }
@@ -205,7 +205,7 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                        if(it[21] !== 'EX' && it[21] !== 'CR (PE)' && it[21] !== 'FO'){
                             cnt ++;
                         }
                     }
@@ -233,7 +233,7 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                        if(it[21] !== 'EX' && it[21] !== 'CR (PE)' && it[21] !== 'FO'){
                             cnt ++;
                         }
                     }
@@ -260,7 +260,7 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                        if(it[21] !== 'EX' && it[21] !== 'CR (PE)' && it[21] !== 'FO'){
                             cnt ++;
                         }
                     }
