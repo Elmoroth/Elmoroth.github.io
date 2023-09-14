@@ -54,7 +54,9 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        cnt ++;
+                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                            cnt ++;
+                        }
                     }
                 }
                 if(cnt > 0 ){
@@ -72,7 +74,9 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        cnt ++;
+                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                            cnt ++;
+                        }
                     }
                 }
                 if(cnt > 0 ){
@@ -90,7 +94,9 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        cnt ++;
+                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                            cnt ++;
+                        }
                     }
                 }
                 if(cnt > 0 ){
@@ -108,7 +114,9 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        cnt ++;
+                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                            cnt ++;
+                        }
                     }
                 }
                 if(cnt > 0 ){
@@ -126,7 +134,9 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        cnt ++;
+                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                            cnt ++;
+                        }
                     }
                 }
                 if(cnt > 0 ){
@@ -144,7 +154,9 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        cnt ++;
+                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                            cnt ++;
+                        }
                     }
                 }
                 if(cnt > 0 ){
@@ -165,7 +177,9 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        cnt ++;
+                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                            cnt ++;
+                        }
                     }
                 }
                 if(cnt > 0 ){
@@ -191,7 +205,9 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        cnt ++;
+                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                            cnt ++;
+                        }
                     }
                 }
                 if(cnt > 0 ){
@@ -217,7 +233,9 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        cnt ++;
+                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                            cnt ++;
+                        }
                     }
                 }
                 if(cnt > 0 ){
@@ -242,7 +260,9 @@ function loadFamily(){
                         break;
                     }
                     if( it[0] == 'species' ){
-                        cnt ++;
+                        if(it[21] !== 'EX' && item[21] !== 'CR (PE)' && item[21] !== 'FO'){
+                            cnt ++;
+                        }
                     }
                 }
                 if(cnt > 0 ){
