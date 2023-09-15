@@ -63,6 +63,11 @@ function loadFamily(){
                     data += '<span class="famcount">'+cnt+' sp.</span>'
                 }
                 data += '</div>';
+                if(arr[index + 1]){
+                    if(arr[index + 1][0] === 'genus'){
+                        data += '<ol class="genuslist">';
+                    }
+                }
                 break;
             case 'Order': 
                 data += '<div class="order heading"><span class="famlatin">'+item[2]+'</span>'
@@ -83,6 +88,11 @@ function loadFamily(){
                     data += '<span class="famcount">'+cnt+' sp.</span>'
                 }
                 data += '</div>';
+                if(arr[index + 1]){
+                    if(arr[index + 1][0] === 'genus'){
+                        data += '<ol class="genuslist">';
+                    }
+                }
                 break;
             case 'Suborder': 
                 data += '<div class="suborder heading"><span class="famlatin">'+item[3]+'</span>'
@@ -103,6 +113,11 @@ function loadFamily(){
                     data += '<span class="famcount">'+cnt+' sp.</span>'
                 }
                 data += '</div>';
+                if(arr[index + 1]){
+                    if(arr[index + 1][0] === 'genus'){
+                        data += '<ol class="genuslist">';
+                    }
+                }
                 break;
             case 'Infraorder': 
                 data += '<div class="infraorder heading"><span class="famlatin">'+item[4]+'</span>'
@@ -123,6 +138,11 @@ function loadFamily(){
                     data += '<span class="famcount">'+cnt+' sp.</span>'
                 }
                 data += '</div>';
+                if(arr[index + 1]){
+                    if(arr[index + 1][0] === 'genus'){
+                        data += '<ol class="genuslist">';
+                    }
+                }
                 break;
             case 'Parvorder': 
                 data += '<div class="parvorder heading"><span class="famlatin">'+item[5]+'</span>'
@@ -143,6 +163,11 @@ function loadFamily(){
                     data += '<span class="famcount">'+cnt+' sp.</span>'
                 }
                 data += '</div>';
+                if(arr[index + 1]){
+                    if(arr[index + 1][0] === 'genus'){
+                        data += '<ol class="genuslist">';
+                    }
+                }
                 break;
             case 'Superfamily': 
                 data += '<div class="superfamily heading"><span class="famlatin">'+item[6]+'</span>'
@@ -163,6 +188,11 @@ function loadFamily(){
                     data += '<span class="famcount">'+cnt+' sp.</span>'
                 }
                 data += '</div>';
+                if(arr[index + 1]){
+                    if(arr[index + 1][0] === 'genus'){
+                        data += '<ol class="genuslist">';
+                    }
+                }
                 break;
             case 'Family': 
                 data += '<div id="'+item[7]+'" class="family heading"><span class="famlatin">'+item[7]+'</span>'
