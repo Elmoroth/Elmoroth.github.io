@@ -1,0 +1,16 @@
+.imageblock {
+    height: 10rem;
+    width: 10rem;
+    display: flex;
+    justify-content: center;
+}
+.imageblock img {
+    max-height: 9rem;
+    max-width: 10rem;
+    transform: scaleX(-1);
+    margin: auto;
+    transition: transform .1s;
+}
+.extinct {
+    opacity: 0.5;
+}
