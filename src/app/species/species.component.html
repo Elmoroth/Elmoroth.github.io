@@ -1,0 +1,5 @@
+<section class="speciestree">
+  <div *ngIf="species$ | async; let species" class="speciestreeblock">
+    <app-speciestree [speciesTree]="species"></app-speciestree>
+  </div>
+</section>

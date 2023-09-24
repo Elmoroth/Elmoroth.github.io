@@ -1,0 +1,239 @@
+.speciesblock {
+    box-shadow: 4px 4px 8px rgba(0,0,0,.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    min-width: 13rem;
+    height: 13rem;
+    transition: transform .1s;
+    background-color: white;
+    position:relative;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+}
+.species:hover {
+    box-shadow: 4px 4px 12px rgba(0,0,0,.4);
+}
+.imageblock {
+    height: 10rem;
+    width: 10rem;
+    display: flex;
+    justify-content: center;
+}
+.imageblock img {
+    max-height: 9rem;
+    max-width: 10rem;
+    transform: scaleX(-1);
+    margin: auto;
+    transition: transform .1s;
+}
+.speciesfooter {
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    text-rendering: optimizeLegibility;
+    overflow-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+}
+.english {
+    font-size: .88rem;
+    font-weight: 700;
+}
+.latin {
+    color: #646464;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+.iucnblock {
+    top: .5rem;
+    right: .5rem;
+    border-radius: 10rem;
+    padding: 0rem .4rem .2rem .4rem;
+    display: inline-flex;
+    justify-content: center;
+    vertical-align: middle;
+    background-color: #d1e744;
+    height: 0.75rem;
+    float: right;
+}
+.iucn {
+    font-size: .63rem;
+    font-weight: 700;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.iucn-LC {
+    background-color:#68bb53;
+}
+.iucn-NT {
+    background-color:#d1e744;
+}
+.iucn-VU {
+    background-color:#e5d42d;
+}
+.iucn-EN {
+    background-color:#e77b4d;
+}
+.iucn-CR {
+    background-color:#b61917;
+}
+.iucn-EW {
+    background-color:#542344;
+}
+.iucn-EX {
+    background-color:#000;
+}
+.iucn-FO {
+    background-color:#000;
+}
+.iucn-DD {
+    background-color:#595959;
+}
+.iucn-CR .iucn {
+    color:#fff;
+}
+.iucn-EW .iucn {
+    color:#fff;
+}
+.iucn-EX .iucn {
+    color:#fff;
+}
+.iucn-FO .iucn {
+    color:#fff;
+}
+.iucn-DD .iucn {
+    color:#fff;
+}
+.extinct {
+    opacity: 0.5;
+}
+.range {
+    font-size: .63rem;
+    font-weight: 700;
+}
+.rangeblock {
+    position: absolute;
+    top: .5rem;
+    left: .5rem;
+    border-radius: 10rem;
+    padding: 0rem .1rem .2rem .1rem;
+    display: inline-flex;
+    font-size: .63rem;
+    font-weight: 700;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    cursor: default;
+}
+.rangeblock:hover .rangetooltip {
+    visibility: visible;
+    opacity: 1;
+}
+.rangeblock:hover .rangetooltip::after {
+    visibility: visible;
+    opacity: 1;
+}
+.rangetooltip {
+    visibility: hidden;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-bottom:10px;
+    padding: 0.75rem;
+    width: 15rem;
+    transform: translateX(-30%);
+    background-color: #BE363A;
+    color: #fff;
+    border-radius: 8px;
+    opacity: 0;
+    transition:         
+        opacity 0.2s ease-in-out,
+        visibility 0.2s ease-in-out,
+        transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+    filter: drop-shadow(0 0 0.5rem #BE363A);
+    z-index: 100;
+    font-weight: 600;
+    font-size: .7rem;
+}
+.rangetooltip::after {
+    content: "";
+    position:absolute;
+    top: 100%;
+    left: 30%;
+    margin-bottom:-5px;
+    transform:translateX(-50%);
+    border:10px solid #000;
+    border-color: #BE363A transparent transparent transparent;
+    visibility: hidden;
+    opacity: 0;
+    transition:         
+        opacity 0.2s ease-in-out,
+        visibility 0.2s ease-in-out,
+        transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+}
+.infoblock:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+.infoblock:hover .tooltip::after {
+    visibility: visible;
+    opacity: 1;
+    z-index: 9999;
+}
+.infoblock {
+    position: absolute;
+    bottom: .5rem;
+    right: .5rem;
+    border-radius: 10rem;
+    padding: 0rem .1rem .2rem .1rem;
+    display: inline-flex;
+    justify-content: center;
+    vertical-align: middle;
+    background-color: #BE363A;
+    color: #fff;
+    height: 0.75rem;
+    width: 0.75rem;
+    font-size: .63rem;
+    font-weight: 700;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    cursor: default;
+    white-space: pre-wrap;
+}
+.tooltip {
+    visibility: hidden;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-bottom:10px;
+    padding: 0.75rem;
+    width: 15rem;
+    transform: translateX(-30%);
+    background-color: #BE363A;
+    color: #fff;
+    border-radius: 8px;
+    opacity: 0;
+    transition:         
+        opacity 0.2s ease-in-out,
+        visibility 0.2s ease-in-out,
+        transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+    filter: drop-shadow(0 0 0.5rem #BE363A);
+    z-index: 100;
+    font-weight: 600;
+    font-size: .7rem;
+}
+.tooltip::after {
+    content: "";
+    position:absolute;
+    top: 100%;
+    left: 30%;
+    margin-bottom:-5px;
+    transform:translateX(-50%);
+    border:10px solid #000;
+    border-color: #BE363A transparent transparent transparent;
+    visibility: hidden;
+    opacity: 0;
+    transition:         
+        opacity 0.2s ease-in-out,
+        visibility 0.2s ease-in-out,
+        transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+}
