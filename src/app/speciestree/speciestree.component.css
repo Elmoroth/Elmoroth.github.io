@@ -1,0 +1,67 @@
+
+.speciestreeheader {
+    padding: 0 0.5rem;
+    line-height: 1.8em;
+    font-weight: bold;
+}
+.speciestreelist {
+    display: flex;
+    flex-direction: column;
+}
+.Clade {
+    background-color: #bfbfbf;
+}
+.Superorder {
+    background-image: linear-gradient( to bottom, #97A098 30%, #E8DAD9 300% );
+}
+.Order {
+    background-image: linear-gradient( to bottom, #7E5F62 30%, #C2A5A3 300% );
+}
+.Suborder {
+    background-image: linear-gradient( to bottom, #7E5F62 30%, #BE363A 300% );
+}
+.Infraorder {
+    background-image: linear-gradient( to bottom, #7E5F62 30%, #BE363A 300% );
+}
+.Parvorder {
+    background-image: linear-gradient( to bottom, #7E5F62 30%, #BE363A 300% );
+}
+.Superfamily {
+    background-image: linear-gradient( to bottom, #7E5F62 30%, #BE363A 300% );
+}
+.Epifamily {
+    background-image: linear-gradient( to bottom, #7E5F62 30%, #BE363A 300% );
+}
+.Family {
+    background-image: linear-gradient( to bottom, #BE363A 30%, #C2A5A3 300% );
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+}
+.Subfamily {
+    background-color: #C2A5A3;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+}
+.Tribe {
+    background-color: #E8DAD9;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+}
+.famlatin {
+    font-style: italic;
+}
+.famenglish {
+    padding-left: 1rem;
+}
+.extinct {
+    font-style: italic;
+    padding-right: 0.1rem;
+}
+.notes {
+    margin: 1rem;
+}
+
+.genuslist {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 -5.5rem 0 0;
+    padding: 1rem 0 0 0;
+}
