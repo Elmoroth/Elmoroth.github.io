@@ -58,7 +58,7 @@ export class SpeciesService {
               children: []
             };
           })
-          .filter((el:Species) => el.rank !== 'ssp' && el.rank !== 'group (monotypic)' && el.rank !== 'group (polytypic)')
+          .filter((el:Species) => el.rank !== 'ssp' /*&& el.rank !== 'group (monotypic)' && el.rank !== 'group (polytypic)'*/)
           .forEach(function(entry:Species) {
         
             //add an entry for this node to the map so that any future children can lookup the parent

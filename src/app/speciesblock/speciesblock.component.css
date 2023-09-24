@@ -34,3 +34,8 @@
     font-size: .75rem;
     font-style: italic;
 }
+.speciesbody {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

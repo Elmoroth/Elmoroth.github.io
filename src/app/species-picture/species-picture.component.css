@@ -14,3 +14,7 @@
 .extinct {
     opacity: 0.5;
 }
+.picturelist {
+    display: flex;
+    flex-flow: row nowrap;
+}
