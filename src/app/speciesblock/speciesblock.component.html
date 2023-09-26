@@ -9,8 +9,8 @@
       </a>
   </section>
   <footer class="speciesfooter">
-    <span class="latin">{{speciesTree.name}}</span>
     <span class="english">{{speciesTree.englishName}}</span>
+    <span class="latin">{{speciesTree.name}}</span>
     <app-species-info *ngIf="speciesTree.notes !== ''" [info]="speciesTree.notes"></app-species-info>
   </footer>
 </div>

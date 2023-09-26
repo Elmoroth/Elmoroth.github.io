@@ -4,8 +4,8 @@
   </a>
   <nav class="menubar">
     <div (click)="toggle()" class="menuitem">Index</div>
-    <a [routerLink]="['/']" class="menuitem">List</a>
-    <a [routerLink]="['/familytree']" class="menuitem">Tree</a>
+    <a [routerLink]="['/']" (click)="closeMenu()" class="menuitem active">List</a>
+    <a [routerLink]="['/familytree']" (click)="closeMenu()" class="menuitem">Tree</a>
   </nav>
 </header>
 

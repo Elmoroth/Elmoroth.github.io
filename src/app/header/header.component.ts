@@ -19,7 +19,11 @@ export class HeaderComponent implements OnInit {
   }
 
   toggle() {
-    this.menuservice.emitData();
+    this.menuservice.toggle();
+  }
+
+  closeMenu() {
+    this.menuservice.close();
   }
 
 }

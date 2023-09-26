@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BigmenuService } from './bigmenu/bigmenu.service';
 
 @Component({
   selector: 'app-root',
@@ -13,4 +14,6 @@ import { Component } from '@angular/core';
   `,
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor(private menuservice: BigmenuService){}
+}

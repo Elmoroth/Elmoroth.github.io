@@ -25,7 +25,7 @@ export class BigmenuComponent implements OnInit {
   }
 
   toggle() {
-    this.menuservice.emitData();
+    this.menuservice.toggle();
   }
 
 }

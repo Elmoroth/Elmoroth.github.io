@@ -2,14 +2,16 @@
     height: 10rem;
     width: 10rem;
     display: flex;
+    align-items: center;
     justify-content: center;
 }
 .imageblock img {
-    max-height: 9rem;
-    max-width: 10rem;
+    max-height: 90%;
+    max-width: 90%;
     transform: scaleX(-1);
     margin: auto;
     transition: transform .1s;
+    mix-blend-mode: multiply;
 }
 .extinct {
     opacity: 0.5;

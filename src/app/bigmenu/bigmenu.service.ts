@@ -13,8 +13,12 @@ export class BigmenuService {
   public toggleState$ = this.toggleState.asObservable();
   private toggleVal = false;
 
-  emitData(){
+  toggle(){
     this.toggleVal = !this.toggleVal;
     this.toggleState.next(this.toggleVal);
-}
+  }
+  close(){
+    this.toggleVal = false;
+    this.toggleState.next(this.toggleVal);
+  }
 }

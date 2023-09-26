@@ -1,5 +1,9 @@
 header {	
     background-image: linear-gradient( to right, #97A098 69%, #BE363A, Black 89% );
+    /*background-image: linear-gradient( to right, #BCC2BD 69%, #BE363A, Black 89% ); 
+    background-image: linear-gradient( to right, #C3CED5 69%, #E32018, #1C191D 89% );  */
+
+      
     color: #251F21;
     text-align: center;
     font-weight:bold;
@@ -29,4 +33,7 @@ header {
       padding: 0.75em 0em;
       color: #BE363A;
       cursor: pointer;
+  }
+  .active {
+      border-bottom: #BE363A;
   }

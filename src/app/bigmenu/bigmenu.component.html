@@ -3,7 +3,7 @@
     <dl class="mblock">
       <dd class="morder">
         <a routerLink="/clade/{{familyMenu.name}}" class="mlink" (click)="toggle()">
-          {{familyMenu.name.toUpperCase()}}
+          <span>{{familyMenu.name.toUpperCase()}}</span>
         </a>
       </dd>
       <dt *ngFor="let family of familyMenu.children" class="mfamily">
