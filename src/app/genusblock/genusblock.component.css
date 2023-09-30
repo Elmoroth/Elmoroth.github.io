@@ -3,8 +3,8 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 0;
-    margin: 0rem 6.5rem 1.5rem 1rem;
-    background-color: #d5d8d5;
+    margin: 0rem 1rem 1.5rem 1rem;
+    background-color: #e2e4e2;
     /*background-color: #BCC2BD;*/
     box-shadow: 0 2px 4px rgba(0,0,0,.2);
 }

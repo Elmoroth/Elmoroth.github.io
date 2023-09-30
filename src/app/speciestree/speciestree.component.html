@@ -4,8 +4,20 @@
       <span *ngIf="speciesTree.category == 'EX' || speciesTree.category == 'FO'" class="extinct">†</span>
       <span class="famlatin">{{speciesTree.name}}</span>
       <span class="famenglish">{{speciesTree.englishName}}</span>
+      <app-count [speciesTree]="speciesTree"></app-count>
     </header>
-    <section *ngIf="speciesTree.notes" class="notes">
+    <section *ngIf="speciesTree.rank == 'Family' && (speciesTree.notes || speciesTree.asset)" class="familyBlock">
+      <section *ngIf="speciesTree.notes" class="notes">
+        {{speciesTree.notes}}
+      </section>
+      <figure *ngIf="speciesTree.asset" class="imageblock">
+        <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{speciesTree.asset}}/320" 
+            alt="Picture of {{speciesTree.englishName}}" 
+            loading="lazy"
+            [class.extinct] = "speciesTree.category == 'FO' || speciesTree.category == 'EX' || speciesTree.category == 'CR (PE)'"/>
+      </figure>
+    </section>
+    <section *ngIf="speciesTree.rank !== 'Family' && speciesTree.notes" class="notes">
       {{speciesTree.notes}}
     </section>
     <section class="genuslist">

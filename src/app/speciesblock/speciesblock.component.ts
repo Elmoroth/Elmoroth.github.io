@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Species } from '../species/species';
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { IucnComponent } from '../iucn/iucn.component';
 import { SpeciesPictureComponent } from '../species-picture/species-picture.component';
 import { RangeComponent } from '../range/range.component';
@@ -16,11 +16,14 @@ import { SpeciesInfoComponent } from '../species-info/species-info.component';
     IucnComponent, 
     SpeciesPictureComponent, 
     RangeComponent, 
-    SpeciesInfoComponent
+    SpeciesInfoComponent,
+    AsyncPipe
   ]
 })
 export class SpeciesblockComponent {
 
   @Input() speciesTree!: Species;
+
+  constructor(){}
 
 }

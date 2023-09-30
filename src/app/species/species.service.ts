@@ -55,7 +55,10 @@ export class SpeciesService {
               picture: entry[20],
               asset: entry[21],
               ebirdCode: entry[22],
-              children: []
+              children: [],
+              countExtant: 0,
+              countExtinct: 0,
+              countFossil: 0
             };
           })
           .filter((el:Species) => el.rank !== 'ssp' /*&& el.rank !== 'group (monotypic)' && el.rank !== 'group (polytypic)'*/)
@@ -73,6 +76,7 @@ export class SpeciesService {
               parentNode.children.push(entry);    
             }
         });
+        this.countChildren(root);
         return root;
       }),
       shareReplay(1)
@@ -105,5 +109,24 @@ export class SpeciesService {
          return result;
     }
     return null;
+  }
+
+  countChildren(species: Species){
+    if(species.rank == 'species'){
+      if(species.category == 'FO'){
+        species.countFossil = 1
+      } else if(species.category == 'EX'){
+        species.countExtinct = 1
+      } else {
+        species.countExtant = 1
+      }
+    } else {
+      for( let i=0; i < species.children.length; i++){
+        this.countChildren(species.children[i]);
+        species.countFossil += species.children[i].countFossil;
+        species.countExtinct += species.children[i].countExtinct;
+        species.countExtant += species.children[i].countExtant;
+      }
+    }
   }
 }

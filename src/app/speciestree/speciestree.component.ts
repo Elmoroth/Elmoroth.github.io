@@ -4,6 +4,7 @@ import { NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/c
 import { RouterModule } from '@angular/router';
 import { GenusblockComponent } from '../genusblock/genusblock.component';
 import { SpeciesblockComponent } from '../speciesblock/speciesblock.component';
+import { CountComponent } from '../count/count.component';
 
 @Component({
   standalone: true,
@@ -18,7 +19,8 @@ import { SpeciesblockComponent } from '../speciesblock/speciesblock.component';
     NgSwitchCase, 
     NgSwitchDefault, 
     GenusblockComponent, 
-    SpeciesblockComponent
+    SpeciesblockComponent,
+    CountComponent
   ]
 })
 export class SpeciestreeComponent {

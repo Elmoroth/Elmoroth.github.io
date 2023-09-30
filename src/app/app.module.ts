@@ -27,6 +27,7 @@ import { IucnComponent } from './iucn/iucn.component';
 import { SpeciesPictureComponent } from './species-picture/species-picture.component';
 import { RangeComponent } from './range/range.component';
 import { SpeciesInfoComponent } from './species-info/species-info.component';
+import { CountComponent } from './count/count.component';
 
 @NgModule({
   imports: [
@@ -43,10 +44,11 @@ import { SpeciesInfoComponent } from './species-info/species-info.component';
     SpeciesPictureComponent,
     RangeComponent,
     SpeciesInfoComponent,
+    CountComponent,
     HttpClientModule,
     AppRoutingModule,
   ],
-  declarations: [																	
+  declarations: [																		
     AppComponent,
     PageNotFoundComponent,
     SpinnerComponent

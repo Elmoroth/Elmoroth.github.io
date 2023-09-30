@@ -1,0 +1,13 @@
+
+.count {
+    float: right;
+}
+.countExtant {
+    padding-left: 0.5rem;
+}
+.countExtinct {
+    padding-left: 0.5rem;
+}
+.countFossil {
+    padding-left: 0.5rem;
+}

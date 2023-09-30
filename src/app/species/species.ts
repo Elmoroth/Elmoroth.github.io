@@ -14,7 +14,10 @@ export interface Species {
     picture: string,
     asset: string,
     ebirdCode: string,
-    children: Species[];
+    children: Species[],
+    countExtant: number,
+    countExtinct: number,
+    countFossil: number
 }
 
 export interface Clade {
