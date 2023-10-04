@@ -84,8 +84,18 @@
     margin: 1rem 1rem 1rem auto;  
     min-width: 320px;
     min-height: 320px;
+    max-width: 320px;
+    max-height: 320px;
     display: flex;
     align-items: center;
     justify-content: center;
+    mix-blend-mode: multiply;
+}
+.familyBlock > .imageblock img {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     mix-blend-mode: multiply;
 }
