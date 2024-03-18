@@ -31,7 +31,7 @@ export class SpeciesService {
           .slice(1, data.values.length)
           .map(function(entry: string){
 
-            const range = entry[18];
+            const range = entry[19];
             let rangeShort = '';
             let rangeDescr = '';
             if(range){
@@ -43,18 +43,18 @@ export class SpeciesService {
               rank: entry[0],
               parent: entry[2],
               name: entry[3],
-              genus: entry[9],
-              species: entry[11],
-              englishName: entry[13],
-              nederlands: entry[14],
-              category: entry[15],
-              authority: entry[16],
-              notes: entry[17],
+              genus: entry[10],
+              species: entry[12],
+              englishName: entry[14],
+              nederlands: entry[15],
+              category: entry[16],
+              authority: entry[17],
+              notes: entry[18],
               rangeShort: rangeShort,
               rangeDescription: rangeDescr,
-              picture: entry[20],
-              asset: entry[21],
-              ebirdCode: entry[22],
+              picture: entry[21],
+              asset: entry[22],
+              ebirdCode: entry[23],
               children: [],
               countExtant: 0,
               countExtinct: 0,
