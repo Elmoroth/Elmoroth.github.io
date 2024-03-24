@@ -2,3 +2,57 @@
     height: 100%;
     flex-grow: 10;
 }
+.speciestree {
+    display: flex;
+}
+.partialfamilytree {
+    width: calc(500px - 2em);
+    right: 50px;
+    position: fixed;
+    overflow-y: scroll;
+    height: calc(100% - 58px);
+    padding: 0em 1em;
+}
+.speciestreeblock {
+    width: calc(100% - 500px);
+}
+
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+    color: black;
+}
+.treeMenuItem {
+    display: flex;
+    padding: 0em 1rem;
+    height: 2.25rem;
+}
+.treeMenuItem a {
+    display: flex;
+    height: 100%;
+}
+.treeMenuLatin {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    font-style: italic;
+    align-self: center;
+    color: #646464;
+}
+.treeMenuEnglish {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    font-weight: bold;
+    align-self: center;
+}
+
+.treeMenuItem::before{
+    content       : '';
+    display       : block;
+    position      : absolute;
+    top           : 1rem;
+    left          : 0.75rem;
+    width         : 0.6rem;
+    height        : 0.6rem;
+    border-radius : 50%;
+    background    : #ddd;
+}

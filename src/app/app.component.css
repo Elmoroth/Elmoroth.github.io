@@ -11,7 +11,7 @@
 */
 
 main {
-  max-width: 88%;
+  max-width: calc(100vw - 100px);
   margin: 0 auto;
   box-shadow: 0 0 13px 3px rgba(0,0,0,.23);
   min-height: 100vh;

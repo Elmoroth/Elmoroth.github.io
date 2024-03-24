@@ -27,8 +27,7 @@ ul.treeMenuUl li::before{
     border-width : 0 0 2px 2px;
 }
 
-ul.treeMenuUl li::after,
-.treeMenuItem::before{
+ul.treeMenuUl li::after{
   content       : '';
   display       : block;
   position      : absolute;
@@ -38,6 +37,40 @@ ul.treeMenuUl li::after,
   height        : 0.6rem;
   border-radius : 50%;
   background    : #ddd;
+}
+
+ul.treeMenuUl li.Superorder::after {
+    background-image: linear-gradient( to bottom, #97A098 30%, #E8DAD9 300% );
+}
+ul.treeMenuUl li.Order::after {
+    background-image: linear-gradient( to bottom, #7E5F62 30%, #C2A5A3 300% );
+}
+ul.treeMenuUl li.Suborder::after {
+    background-image: linear-gradient( to bottom, #7E5F62 30%, #BE363A 300% );
+}
+ul.treeMenuUl li.Infraorder::after {
+    background-image: linear-gradient( to bottom, #7E5F62 30%, #BE363A 300% );
+}
+ul.treeMenuUl li.Parvorder::after {
+    background-image: linear-gradient( to bottom, #7E5F62 30%, #BE363A 300% );
+}
+ul.treeMenuUl li.Superfamily::after {
+    background-image: linear-gradient( to bottom, #7E5F62 30%, #BE363A 300% );
+}
+ul.treeMenuUl li.Epifamily::after {
+    background-image: linear-gradient( to bottom, #7E5F62 30%, #BE363A 300% );
+}
+ul.treeMenuUl li.Family::after
+{
+    background : #BE363A;
+}
+ul.treeMenuUl li.Subfamily::after
+{
+    background : #C2A5A3;
+}
+ul.treeMenuUl li.Tribe::after
+{
+    background : #E8DAD9;
 }
 
 a:hover, a:visited, a:link, a:active

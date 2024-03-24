@@ -55,6 +55,33 @@ export class FamilyTreeService {
     return menus;
   }
 
+  getPartialTree(name: string): Observable<FamilyTree>
+  {
+    if(this._familyTree$ === EMPTY){
+      this._familyTree$ = this.getFamiliesFromGoogle()
+    }
+    return this._familyTree$.pipe(
+      map((clade: FamilyTree) => {
+        return this.findPartialTree(name, clade)!
+      })
+    );
+  }
+  findPartialTree(name: string, clade: FamilyTree): FamilyTree | null
+  {
+    if(clade.name == name)
+    {
+      return clade;
+    }
+    var partialtree;
+    if (clade.children != null){
+      for(var i=0; i < clade.children.length; i++){
+        partialtree = this.findPartialTree(name, clade.children[i]);
+        if(partialtree != null) return partialtree;
+      }
+    }
+    return null;
+  }
+
   getFamilies(): Observable<FamilyTree> {
     if(this._familyTree$ === EMPTY){
       this._familyTree$ = this.getFamiliesFromGoogle()
