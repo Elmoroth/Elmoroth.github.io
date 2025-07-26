@@ -77,7 +77,7 @@ export class SpeciesService {
                 current = idToSpeciesMap.get(current.parent || '');
               }
               if (current) {
-                const sspRange = entry.rangeDescription || '';
+                const sspRange = entry.rangeShort || '';
                 if (sspRange.trim()) {
                   if (!current.rangeDescription) {
                     current.rangeDescription = sspRange;
