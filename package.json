@@ -6,7 +6,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --base-href=/",
+    "postbuild": "cp dist/index.html dist/404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "e2e": "ng e2e"
