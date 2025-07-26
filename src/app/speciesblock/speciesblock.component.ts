@@ -12,18 +12,17 @@ import { SpeciesInfoComponent } from '../species-info/species-info.component';
   templateUrl: './speciesblock.component.html',
   styleUrls: ['./speciesblock.component.css'],
   imports: [
-    NgIf, 
-    IucnComponent, 
-    SpeciesPictureComponent, 
-    RangeComponent, 
-    SpeciesInfoComponent,
-    AsyncPipe
+    NgIf,
+    IucnComponent,
+    SpeciesPictureComponent,
+    RangeComponent,
+    SpeciesInfoComponent
   ]
 })
 export class SpeciesblockComponent {
 
   @Input() speciesTree!: Species;
 
-  constructor(){}
+  constructor() { }
 
 }

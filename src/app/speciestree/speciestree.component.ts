@@ -12,14 +12,10 @@ import { CountComponent } from '../count/count.component';
   templateUrl: './speciestree.component.html',
   styleUrls: ['./speciestree.component.css'],
   imports: [
-    NgFor, 
-    NgIf, 
-    RouterModule, 
-    NgSwitch, 
-    NgSwitchCase, 
-    NgSwitchDefault, 
-    GenusblockComponent, 
-    SpeciesblockComponent,
+    NgFor,
+    NgIf,
+    RouterModule,
+    GenusblockComponent,
     CountComponent
   ]
 })

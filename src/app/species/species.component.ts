@@ -18,7 +18,7 @@ import { FamilyTreeComponent } from '../familytree/familytree.component';
   selector: 'app-species',
   templateUrl: './species.component.html',
   styleUrls: ['./species.component.css'],
-  imports: [NgFor, NgIf, AsyncPipe, SpeciestreeComponent, FamilyTreeComponent, RouterModule],
+  imports: [NgIf, AsyncPipe, SpeciestreeComponent, FamilyTreeComponent, RouterModule],
 })
 
 export class SpeciesComponent implements OnInit {
@@ -31,7 +31,7 @@ export class SpeciesComponent implements OnInit {
     private _speciesservice: SpeciesService,
     private _familytreeservice: FamilyTreeService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.species$ = this.route.paramMap.pipe(
