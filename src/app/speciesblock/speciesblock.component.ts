@@ -7,17 +7,16 @@ import { RangeComponent } from '../range/range.component';
 import { SpeciesInfoComponent } from '../species-info/species-info.component';
 
 @Component({
-  standalone: true,
-  selector: 'app-speciesblock',
-  templateUrl: './speciesblock.component.html',
-  styleUrls: ['./speciesblock.component.css'],
-  imports: [
-    NgIf,
-    IucnComponent,
-    SpeciesPictureComponent,
-    RangeComponent,
-    SpeciesInfoComponent
-  ]
+    selector: 'app-speciesblock',
+    templateUrl: './speciesblock.component.html',
+    styleUrls: ['./speciesblock.component.css'],
+    imports: [
+        NgIf,
+        IucnComponent,
+        SpeciesPictureComponent,
+        RangeComponent,
+        SpeciesInfoComponent
+    ]
 })
 export class SpeciesblockComponent {
 

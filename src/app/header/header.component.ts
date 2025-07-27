@@ -5,11 +5,10 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { BigmenuService } from '../bigmenu/bigmenu.service';
 
 @Component({
-  standalone: true,
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
-  imports: [RouterModule, BigmenuComponent, NgIf, AsyncPipe]
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css'],
+    imports: [RouterModule, BigmenuComponent, NgIf, AsyncPipe]
 })
 export class HeaderComponent implements OnInit {
 

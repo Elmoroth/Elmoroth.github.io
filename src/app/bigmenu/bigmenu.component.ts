@@ -7,11 +7,10 @@ import { RouterModule } from '@angular/router';
 import { BigmenuService } from './bigmenu.service';
 
 @Component({
-  standalone: true,
-  selector: 'app-bigmenu',
-  templateUrl: './bigmenu.component.html',
-  styleUrls: ['./bigmenu.component.css'],
-  imports: [NgFor, NgIf, AsyncPipe, RouterModule]
+    selector: 'app-bigmenu',
+    templateUrl: './bigmenu.component.html',
+    styleUrls: ['./bigmenu.component.css'],
+    imports: [NgFor, NgIf, AsyncPipe, RouterModule]
 })
 export class BigmenuComponent implements OnInit {
 

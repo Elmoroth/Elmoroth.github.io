@@ -6,11 +6,10 @@ import { Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
 
 @Component({
-  standalone: true,
-  selector: 'app-familyTreeBlock',
-  templateUrl: './familyTreeBlock.component.html',
-  styleUrls: ['./familyTreeBlock.component.css'],
-  imports: [NgIf, AsyncPipe, FamilyTreeComponent]
+    selector: 'app-familyTreeBlock',
+    templateUrl: './familyTreeBlock.component.html',
+    styleUrls: ['./familyTreeBlock.component.css'],
+    imports: [NgIf, AsyncPipe, FamilyTreeComponent]
 })
 export class FamilyTreeBlockComponent implements OnInit {
   familyTree$!: Observable<FamilyTree>;

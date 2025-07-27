@@ -5,16 +5,15 @@ import { SpeciesblockComponent } from '../speciesblock/speciesblock.component';
 import { CountComponent } from '../count/count.component';
 
 @Component({
-  standalone: true,
-  selector: 'app-genusblock',
-  templateUrl: './genusblock.component.html',
-  styleUrls: ['./genusblock.component.css'],
-  imports: [
-    SpeciesblockComponent, 
-    NgFor, 
-    NgIf,
-    CountComponent
-  ]
+    selector: 'app-genusblock',
+    templateUrl: './genusblock.component.html',
+    styleUrls: ['./genusblock.component.css'],
+    imports: [
+        SpeciesblockComponent,
+        NgFor,
+        NgIf,
+        CountComponent
+    ]
 })
 export class GenusblockComponent {
 

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { BigmenuService } from './bigmenu/bigmenu.service';
 
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
     <main>
       <app-header></app-header>
       <div class="main">
@@ -12,7 +12,8 @@ import { BigmenuService } from './bigmenu/bigmenu.service';
       </div>
     </main>
   `,
-  styleUrls: ['./app.component.css'],
+    styleUrls: ['./app.component.css'],
+    standalone: false
 })
 export class AppComponent {
   constructor(private menuservice: BigmenuService){}

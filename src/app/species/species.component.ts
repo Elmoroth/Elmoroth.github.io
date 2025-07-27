@@ -14,11 +14,10 @@ import { FamilyTree } from '../familytree/familytree';
 import { FamilyTreeComponent } from '../familytree/familytree.component';
 
 @Component({
-  standalone: true,
-  selector: 'app-species',
-  templateUrl: './species.component.html',
-  styleUrls: ['./species.component.css'],
-  imports: [NgIf, AsyncPipe, SpeciestreeComponent, FamilyTreeComponent, RouterModule],
+    selector: 'app-species',
+    templateUrl: './species.component.html',
+    styleUrls: ['./species.component.css'],
+    imports: [NgIf, AsyncPipe, SpeciestreeComponent, FamilyTreeComponent, RouterModule]
 })
 
 export class SpeciesComponent implements OnInit {

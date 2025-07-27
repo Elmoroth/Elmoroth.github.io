@@ -4,11 +4,10 @@ import { NgFor, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  standalone: true,
-  selector: 'app-familytree',
-  templateUrl: './familytree.component.html',
-  styleUrls: ['./familytree.component.css'],
-  imports: [NgFor, NgIf, RouterModule]
+    selector: 'app-familytree',
+    templateUrl: './familytree.component.html',
+    styleUrls: ['./familytree.component.css'],
+    imports: [NgFor, NgIf, RouterModule]
 })
 
 export class FamilyTreeComponent {
