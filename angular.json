@@ -57,10 +57,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "avestaxo:build:production"
+              "buildTarget": "avestaxo:build:production"
             },
             "development": {
-              "browserTarget": "avestaxo:build:development"
+              "buildTarget": "avestaxo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -68,7 +68,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "avestaxo:build"
+            "buildTarget": "avestaxo:build"
           }
         },
         "test": {
