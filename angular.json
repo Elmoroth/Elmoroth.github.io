@@ -29,6 +29,7 @@
           },
           "configurations": {
             "production": {
+              "outputPath": "dist/avestaxo",
               "budgets": [
                 {
                   "type": "initial",
@@ -101,7 +102,13 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "/",
+            "deployUrl": "/",
+            "target": "build:production",
+            "dir": "dist/avestaxo/browser"
+          }
         }
       }
     }

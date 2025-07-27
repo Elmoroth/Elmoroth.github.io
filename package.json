@@ -6,15 +6,16 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "build:prod": "ng build --configuration=production",
+    "predeploy": "npm run build:prod",
+    "deploy": "ng deploy",
     "build": "ng build --base-href /avestaxo/",
-    "postbuild": "cp dist/index.html dist/404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
-    "-": "^0.0.1",
     "@angular/animations": "^20.1.3",
     "@angular/common": "^20.1.3",
     "@angular/compiler": "^20.1.3",
@@ -22,7 +23,6 @@
     "@angular/platform-browser": "^20.1.3",
     "@angular/platform-browser-dynamic": "^20.1.3",
     "@angular/router": "^20.1.3",
-    "g": "^2.0.1",
     "rxjs": "~7.8.0",
     "sass": "^1.68.0",
     "tslib": "^2.3.0",
