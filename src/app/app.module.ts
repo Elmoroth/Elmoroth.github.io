@@ -1,7 +1,7 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
  
 /* App Root */
 import { AppComponent } from './app.component';
@@ -29,36 +29,30 @@ import { RangeComponent } from './range/range.component';
 import { SpeciesInfoComponent } from './species-info/species-info.component';
 import { CountComponent } from './count/count.component';
 
-@NgModule({
-  imports: [
-    BrowserModule,
-    SpeciesComponent,
-    FamilyTreeComponent,
-    HeaderComponent,
-    SpeciestreeComponent,
-    GenusblockComponent,
-    SpeciesblockComponent,
-    FamilyTreeBlockComponent,
-    BigmenuComponent,
-    IucnComponent,
-    SpeciesPictureComponent,
-    RangeComponent,
-    SpeciesInfoComponent,
-    CountComponent,
-    HttpClientModule,
-    AppRoutingModule,
-  ],
-  declarations: [																		
-    AppComponent,
-    PageNotFoundComponent,
-    SpinnerComponent
-   ], 
-   providers: [
-     {
-       provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
-     }
-   ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        PageNotFoundComponent,
+        SpinnerComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        SpeciesComponent,
+        FamilyTreeComponent,
+        HeaderComponent,
+        SpeciestreeComponent,
+        GenusblockComponent,
+        SpeciesblockComponent,
+        FamilyTreeBlockComponent,
+        BigmenuComponent,
+        IucnComponent,
+        SpeciesPictureComponent,
+        RangeComponent,
+        SpeciesInfoComponent,
+        CountComponent,
+        AppRoutingModule], providers: [
+        {
+            provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 
 export class AppModule {}
