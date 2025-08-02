@@ -9,6 +9,7 @@ export interface FamilyTree {
     isMain: string;
     seen: string;
     picNum: string;
+    picName: string;
     children: FamilyTree[];
     latin: string;
 }

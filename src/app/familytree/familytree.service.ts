@@ -19,7 +19,7 @@ export class FamilyTreeService {
   private readonly EMPTY_TREE: FamilyTree = {
     main: '', parent: '', name: '', rank: '',
     english: '', dutch: '', extinct: '',
-    isMain: '', seen: '', picNum: '', children: [], latin: ''
+    isMain: '', seen: '', picNum: '', picName: '', children: [], latin: ''
   };
 
   constructor(private http: HttpClient) { }
@@ -229,6 +229,7 @@ export class FamilyTreeService {
             isMain: entry[6],
             seen: entry[7],
             picNum: entry[8],
+            picName: entry[9],
             children: [],
             latin: latin
           };
