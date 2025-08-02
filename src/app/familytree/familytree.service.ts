@@ -92,25 +92,83 @@ export class FamilyTreeService {
 
     return null;
   }
+  private findClosestMainDownOrUp(path: FamilyTree[]): number {
+    const leaf = path[path.length - 1];
+
+    const descendantMain = this.findClosestMainDownward(leaf);
+    if (descendantMain) {
+      // Vind het pad tot aan die main, en gebruik dat als basis
+      const newPath = this.findPathToNode(descendantMain.name, path[0]);
+      if (newPath) {
+        // Start rebuild vanaf deze node
+        return newPath.length - 1;
+      }
+    }
+
+    // Anders gebruik klassieke omhoog-klim-methode
+    return this.findClimbUntilNextMain(path);
+  }
+
+  private findClosestMainDownward(node: FamilyTree): FamilyTree | null {
+    if (node.isMain === 'TRUE') return node;
+
+    for (const child of node.children || []) {
+      const result = this.findClosestMainDownward(child);
+      if (result) return result;
+    }
+
+    return null;
+  }
+
   private findClimbUntilNextMain(path: FamilyTree[]): number {
-    // Start from the node's parent
+    // Fallback: als er geen zijtak met main gevonden wordt
+    let fallbackIndex = path.length - 1;
+
     for (let i = path.length - 2; i >= 0; i--) {
       const parent = path[i];
       const child = path[i + 1];
       const index = parent.children.findIndex(c => c.name === child.name);
 
-      // Look at siblings AFTER the matched node
+      // Check of deze node zelf een isMain is — als fallback
+      if (parent.isMain === "TRUE") {
+        fallbackIndex = i;
+      }
+
+      // Kijk naar siblings ná deze node
       const siblingsAfter = parent.children.slice(index + 1);
 
       for (const sibling of siblingsAfter) {
         if (this.subtreeContainsMain(sibling)) {
-          return i; // Stop climbing here
+          return i; // Stop hier, main zit in zijtak
         }
       }
     }
 
-    return 0; // No main found: return root
+    return fallbackIndex; // Geen zijtak-main gevonden, gebruik dichtstbijzijnde main in pad
   }
+
+  /*
+    private findClimbUntilNextMain(path: FamilyTree[]): number {
+      // Start from the node's parent
+      for (let i = path.length - 2; i >= 0; i--) {
+        const parent = path[i];
+        const child = path[i + 1];
+        const index = parent.children.findIndex(c => c.name === child.name);
+  
+        // Look at siblings AFTER the matched node
+        const siblingsAfter = parent.children.slice(index + 1);
+  
+        for (const sibling of siblingsAfter) {
+          if (this.subtreeContainsMain(sibling)) {
+            return i; // Stop climbing here
+          }
+        }
+      }
+  
+      return 0; // No main found: return root
+    }
+      */
+
   private subtreeContainsMain(node: FamilyTree): boolean {
     if (node.isMain === "TRUE") return true;
 
@@ -154,60 +212,83 @@ export class FamilyTreeService {
   private getFamiliesFromGoogle(): Observable<FamilyTree> {
     return this.http.get<GoogleSheetResult>(this._url).pipe(
       map((data: GoogleSheetResult) => {
-        let main = '';
+        const idToFamilyMap = new Map<string, FamilyTree>();
+        const tempEntries: FamilyTree[] = [];
 
-        let idToFamilyMap = new Map<string, FamilyTree>(); //Keeps track of nodes using id as key, for fast lookup
+        // Step 1: Convert sheet rows to FamilyTree objects (without main yet)
+        data.values.slice(1).forEach((entry: string) => {
+          const latin = entry[5] === 'TRUE' ? '† ' + entry[1] : entry[1];
+          const node: FamilyTree = {
+            main: '',
+            parent: entry[0],
+            name: entry[1],
+            rank: entry[2],
+            english: entry[3],
+            dutch: entry[4],
+            extinct: entry[5],
+            isMain: entry[6],
+            seen: entry[7],
+            picNum: entry[8],
+            children: [],
+            latin: latin
+          };
 
-        let root = {} as FamilyTree;
+          tempEntries.push(node);
+          idToFamilyMap.set(node.name, node);
+        });
 
-        data.values
-          .slice(1, data.values.length)
-          .map(function (entry: string) {
-            if (entry[6] == 'TRUE') {
-              main = entry[1];
+        let root: FamilyTree = {} as FamilyTree;
+
+        // Step 2: Build tree
+        tempEntries.forEach(entry => {
+          if (entry.parent === '') {
+            root = entry;
+          } else {
+            const parent = idToFamilyMap.get(entry.parent);
+            if (parent) {
+              parent.children = parent.children || [];
+              parent.children.push(entry);
             }
-            let latin = '';
-            if (entry[5] == 'TRUE') {
-              latin = '† ' + entry[1];
-            } else {
-              latin = entry[1];
-            }
-            return {
-              main: main,
-              parent: entry[0],
-              name: entry[1],
-              rank: entry[2],
-              english: entry[3],
-              dutch: entry[4],
-              extinct: entry[5],
-              isMain: entry[6],
-              seen: entry[7],
-              picNum: entry[8],
-              children: [],
-              latin: latin
-            };
-          })
-          .forEach(function (entry: FamilyTree) {
+          }
+        });
 
-            //add an entry for this node to the map so that any future children can lookup the parent
-            idToFamilyMap.set(entry.name, entry);
+        // Step 3: Propagate `main` downwards from each "isMain" node
+        const propagateMain = (node: FamilyTree, inheritedMain: string) => {
+          let newMain = inheritedMain;
 
-            if (entry.parent == '') {
-              root = entry;
-            } else {
-              //This node has a parent, so let's look it up using the id
-              let parentNode = idToFamilyMap.get(entry.parent);
+          if (node.isMain === 'TRUE') {
+            newMain = node.name;
+          }
 
-              //Let's add the current node as a child of the parent node.
-              if (parentNode) {
-                if (!parentNode.children) { parentNode.children = [] }
-                parentNode.children.push(entry);
+          // Als er nog geen main is en deze node is zelf geen main,
+          // zoek dan in de eigen subtree naar eerste isMain — maar gebruik dit enkel voor deze tak.
+          if (!newMain) {
+            const findFirstChildMain = (children: FamilyTree[]): string | null => {
+              for (const child of children) {
+                if (child.isMain === 'TRUE') {
+                  return child.name;
+                }
+                const deeper = findFirstChildMain(child.children || []);
+                if (deeper) return deeper;
               }
-            }
-          });
+              return null;
+            };
+            newMain = findFirstChildMain(node.children || '') || '';
+          }
+
+          node.main = newMain;
+
+          // Geef het originele `node.main` (niet fallback!) door aan children
+          const nextInheritedMain = node.isMain === 'TRUE' ? node.name : inheritedMain;
+
+          node.children?.forEach(child => propagateMain(child, nextInheritedMain));
+        };
+
+        propagateMain(root, '');
+
         return root;
       }),
       shareReplay(1)
-    )
+    );
   }
 }
