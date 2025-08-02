@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FamilyMenu, FamilyTree } from './familytree';
 import { GoogleSheetResult } from '../species/species';
-import { EMPTY, Observable, map, of, shareReplay } from 'rxjs';
+import { Observable, map, shareReplay, defer } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -9,17 +9,22 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class FamilyTreeService {
-  _url = "https://sheets.googleapis.com/v4/spreadsheets/1HYJKxmv4lpKJsYdGJRusaM9ZlIJ9ksLPShxNDN9_tqk/values/Sheet2?alt=json&key=AIzaSyCS8VedcfE96MslUdLY34iSG0GSMdOaWu8";
+  private readonly _url = "https://sheets.googleapis.com/v4/spreadsheets/1HYJKxmv4lpKJsYdGJRusaM9ZlIJ9ksLPShxNDN9_tqk/values/Sheet2?alt=json&key=AIzaSyCS8VedcfE96MslUdLY34iSG0GSMdOaWu8";
 
-  _familyTree$: Observable<FamilyTree> = EMPTY;
+  // Cold observable – only executes when subscribed
+  private _familyTree$: Observable<FamilyTree> = defer(() => this.getFamiliesFromGoogle()).pipe(
+    shareReplay(1)
+  );
 
-  constructor(private http: HttpClient){}
+  private readonly EMPTY_TREE: FamilyTree = {
+    main: '', parent: '', name: '', rank: '',
+    english: '', dutch: '', extinct: '',
+    isMain: '', seen: '', picNum: '', children: [], latin: ''
+  };
 
-  getFamilyMenu(): Observable<FamilyMenu[]>{
-    if(this._familyTree$ === EMPTY){
-      this._familyTree$ = this.getFamiliesFromGoogle()
-    }
+  constructor(private http: HttpClient) { }
 
+  getFamilyMenu(): Observable<FamilyMenu[]> {
     return this._familyTree$.pipe(
       map((clade: FamilyTree) => {
         let menus: FamilyMenu[] = []
@@ -28,9 +33,9 @@ export class FamilyTreeService {
     );
   }
 
-  findMainAndChildren(clade: FamilyTree, menus: FamilyMenu[]): FamilyMenu[]{
-    if( clade.rank == 'Family' && clade.extinct == 'FALSE'){
-      if(menus.length > 0){
+  findMainAndChildren(clade: FamilyTree, menus: FamilyMenu[]): FamilyMenu[] {
+    if (clade.rank == 'Family' && clade.extinct == 'FALSE') {
+      if (menus.length > 0) {
         menus[menus.length - 1].children.push({
           main: clade.main,
           latin: clade.latin,
@@ -40,14 +45,14 @@ export class FamilyTreeService {
         })
       }
       return menus;
-    } else if( clade.isMain == 'TRUE' ){
+    } else if (clade.isMain == 'TRUE') {
       menus.push({
-        name: clade.name, 
+        name: clade.name,
         children: []
       });
     }
-    if (clade.children != null){
-      for(var i=0; i < clade.children.length; i++){
+    if (clade.children != null) {
+      for (var i = 0; i < clade.children.length; i++) {
         menus = this.findMainAndChildren(clade.children[i], menus);
       }
     }
@@ -55,59 +60,115 @@ export class FamilyTreeService {
     return menus;
   }
 
-  getPartialTree(name: string): Observable<FamilyTree>
-  {
-    if(this._familyTree$ === EMPTY){
-      this._familyTree$ = this.getFamiliesFromGoogle()
-    }
+  getFamilies(): Observable<FamilyTree> {
+    return this._familyTree$;
+  }
+
+  getPartialTree(name: string): Observable<FamilyTree> {
     return this._familyTree$.pipe(
       map((clade: FamilyTree) => {
-        return this.findPartialTree(name, clade)!
+        const path = this.findPathToNode(name, clade);
+        if (!path) return this.EMPTY_TREE;
+
+        const ancestorLevel = this.findClimbUntilNextMain(path);
+        return this.rebuildSubtree(path, ancestorLevel);
       })
     );
   }
-  findPartialTree(name: string, clade: FamilyTree): FamilyTree | null
-  {
-    if(clade.name == name)
-    {
-      return clade;
+
+  private findPathToNode(name: string, node: FamilyTree, path: FamilyTree[] = []): FamilyTree[] | null {
+    const newPath = [...path, node];
+
+    if (node.name === name) {
+      return newPath;
     }
-    var partialtree;
-    if (clade.children != null){
-      for(var i=0; i < clade.children.length; i++){
-        partialtree = this.findPartialTree(name, clade.children[i]);
-        if(partialtree != null) return partialtree;
+
+    if (node.children) {
+      for (const child of node.children) {
+        const result = this.findPathToNode(name, child, newPath);
+        if (result) return result;
       }
     }
+
     return null;
   }
+  private findClimbUntilNextMain(path: FamilyTree[]): number {
+    // Start from the node's parent
+    for (let i = path.length - 2; i >= 0; i--) {
+      const parent = path[i];
+      const child = path[i + 1];
+      const index = parent.children.findIndex(c => c.name === child.name);
 
-  getFamilies(): Observable<FamilyTree> {
-    if(this._familyTree$ === EMPTY){
-      this._familyTree$ = this.getFamiliesFromGoogle()
+      // Look at siblings AFTER the matched node
+      const siblingsAfter = parent.children.slice(index + 1);
+
+      for (const sibling of siblingsAfter) {
+        if (this.subtreeContainsMain(sibling)) {
+          return i; // Stop climbing here
+        }
+      }
     }
 
-    return this._familyTree$;
+    return 0; // No main found: return root
   }
-  
-  getFamiliesFromGoogle(): Observable<FamilyTree> {
+  private subtreeContainsMain(node: FamilyTree): boolean {
+    if (node.isMain === "TRUE") return true;
+
+    return node.children?.some(c => this.subtreeContainsMain(c)) ?? false;
+  }
+  private rebuildSubtree(path: FamilyTree[], startLevel: number): FamilyTree {
+    let subtree = this.cloneFully(path[path.length - 1]); // The target node
+
+    // Rebuild from bottom up to startLevel
+    for (let i = path.length - 2; i >= startLevel; i--) {
+      const current = path[i];
+      const child = subtree;
+      subtree = {
+        ...current,
+        children: current.children.map(c =>
+          c.name === child.name ? child : this.cloneUntilIsMain(c)
+        )
+      };
+    }
+
+    return subtree;
+  }
+  private cloneFully(clade: FamilyTree): FamilyTree {
+    return {
+      ...clade,
+      children: clade.children?.map(c => this.cloneFully(c)) ?? []
+    };
+  }
+  private cloneUntilIsMain(clade: FamilyTree): FamilyTree {
+    // Stop recursion if ismain is "TRUE"
+    if (clade.isMain === "TRUE" || clade.rank == "Order") {
+      return { ...clade, children: [] };
+    }
+
+    return {
+      ...clade,
+      children: clade.children?.map(c => this.cloneUntilIsMain(c)) ?? []
+    };
+  }
+
+  private getFamiliesFromGoogle(): Observable<FamilyTree> {
     return this.http.get<GoogleSheetResult>(this._url).pipe(
       map((data: GoogleSheetResult) => {
-        var main = '';
-        
-        var idToFamilyMap = new Map<string, FamilyTree>(); //Keeps track of nodes using id as key, for fast lookup
-        
-        var root = {} as FamilyTree;
+        let main = '';
+
+        let idToFamilyMap = new Map<string, FamilyTree>(); //Keeps track of nodes using id as key, for fast lookup
+
+        let root = {} as FamilyTree;
 
         data.values
           .slice(1, data.values.length)
-          .map(function(entry: string){
-            if(entry[6] == 'TRUE'){
+          .map(function (entry: string) {
+            if (entry[6] == 'TRUE') {
               main = entry[1];
             }
             let latin = '';
-            if(entry[5] == 'TRUE'){
-              latin = '† '+ entry[1];
+            if (entry[5] == 'TRUE') {
+              latin = '† ' + entry[1];
             } else {
               latin = entry[1];
             }
@@ -126,24 +187,24 @@ export class FamilyTreeService {
               latin: latin
             };
           })
-          .forEach(function(entry:FamilyTree) {
-        
-           //add an entry for this node to the map so that any future children can lookup the parent
-          idToFamilyMap.set(entry.name, entry);
+          .forEach(function (entry: FamilyTree) {
 
-          if(entry.parent == ''){
-            root = entry;
-          } else {
-            //This node has a parent, so let's look it up using the id
-            let parentNode = idToFamilyMap.get(entry.parent);
+            //add an entry for this node to the map so that any future children can lookup the parent
+            idToFamilyMap.set(entry.name, entry);
 
-            //Let's add the current node as a child of the parent node.
-            if(parentNode){
-              if(!parentNode.children){parentNode.children = []}
-              parentNode.children.push(entry);    
+            if (entry.parent == '') {
+              root = entry;
+            } else {
+              //This node has a parent, so let's look it up using the id
+              let parentNode = idToFamilyMap.get(entry.parent);
+
+              //Let's add the current node as a child of the parent node.
+              if (parentNode) {
+                if (!parentNode.children) { parentNode.children = [] }
+                parentNode.children.push(entry);
+              }
             }
-          }
-        });
+          });
         return root;
       }),
       shareReplay(1)
