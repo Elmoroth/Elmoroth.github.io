@@ -1,12 +1,24 @@
 <header>
-  <a [routerLink]="['/']" class="logo">
-    <img class="brand-logo" src="/assets/wallcreeper.png" alt="logo" aria-hidden="true">
-  </a>
-  <nav class="menubar">
-    <div (click)="toggle()" class="menuitem">Index</div>
-    <a [routerLink]="['/']" (click)="closeMenu()" class="menuitem active">List</a>
-    <a [routerLink]="['/familytree']" (click)="closeMenu()" class="menuitem">Tree</a>
-  </nav>
+  <div class="header-left">
+    <a [routerLink]="['/']" class="logo">
+      <img class="brand-logo" src="/assets/wallcreeper.png" alt="logo" aria-hidden="true">
+    </a>
+  </div>
+
+  <div class="header-center">
+    <nav class="menubar">
+      <div (click)="toggle()" class="menuitem">Index</div>
+      <a [routerLink]="['/']" (click)="closeMenu()" class="menuitem active">List</a>
+      <a [routerLink]="['/familytree']" (click)="closeMenu()" class="menuitem">Tree</a>
+    </nav>
+  </div>
+
+  <div class="header-right">
+    @if (speciesTree$ | async; as speciesTree) {
+    <app-count [speciesTree]="speciesTree"></app-count>
+    }
+  </div>
+
 </header>
 
 @if(this.menuservice.toggleState$ | async){

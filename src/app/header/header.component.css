@@ -1,39 +1,54 @@
-header {	
-    background-image: linear-gradient( to right, #97A098 69%, #BE363A, Black 89% );
-    /*background-image: linear-gradient( to right, #BCC2BD 69%, #BE363A, Black 89% ); 
-    background-image: linear-gradient( to right, #C3CED5 69%, #E32018, #1C191D 89% );  */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 58px;
+  background-image: linear-gradient(to right, #97A098 69%, #BE363A, Black 89%);
+  color: #251F21;
+  font-weight: bold;
+  font-size: 20px;
+  z-index: 1001;
+  padding: 0 1em;
+}
 
-      
-    color: #251F21;
-    text-align: center;
-    font-weight:bold;
-    font-size: 20px;
-    position: sticky;
-    width: 100%;
-    top: 0;
-    height: 58px;
-    display: flex;
-    justify-content: center;
-    z-index: 1001;
-  }
-  .logo {
-    padding: 0.2em 0em;
-    position: absolute;
-    left: 0.5em;
-  }
-  .logo img {
-    height: 49px;
-  }
-  .menubar {
-      width: 15em;
-      display: flex;
-      justify-content: space-between;
-  }
-  .menuitem {
-      padding: 0.75em 0em;
-      color: #BE363A;
-      cursor: pointer;
-  }
-  .active {
-      border-bottom: #BE363A;
-  }
+.header-left,
+.header-center,
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Ensure center (menu) is centered in the full width */
+.header-center {
+  flex: 1;
+  justify-content: center;
+}
+
+.logo img {
+  height: 49px;
+}
+
+.menubar {
+  display: flex;
+  gap: 3.5em;
+}
+
+.menuitem {
+  padding: 0.75em 0;
+  color: #BE363A;
+  cursor: pointer;
+}
+
+/*
+.active {
+  border-bottom: 2px solid #BE363A;
+}
+  */
+
+.header-right app-count {
+  padding: 0.75em 0;
+  color: white;
+}

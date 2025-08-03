@@ -2,11 +2,8 @@ import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, ParamMap, RouterModule } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-
 import { SpeciesService } from './species.service';
-
 import { FamilyTreeService } from '../familytree/familytree.service';
-
 import { SpeciestreeComponent } from '../speciestree/speciestree.component';
 import { FamilyTreeComponent } from '../familytree/familytree.component';
 
