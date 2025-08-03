@@ -1,4 +1,11 @@
-<div class="rangeblock">
-  <span class="range">{{speciesTree.rangeShort}}</span>
-  <span class="rangetooltip" [innerHTML]="speciesTree.rangeDescription"></span>
-</div>
+<a class="rangeblock"
+  [href]="'https://ebird.org/embedmap/' + speciesTree.ebirdCode + '?scrollwheel=true&draggable=true&mapType=terrain'"
+  target="_blank" rel="noopener noreferrer">
+
+  <span class="range">{{ speciesTree.rangeShort }}</span>
+  <span class="rangetooltip">
+    <span [innerHTML]="speciesTree.rangeDescription"></span>
+    <br />
+    <strong>Click to open range map.</strong>
+  </span>
+</a>

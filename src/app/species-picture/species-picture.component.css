@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
 }
+
 .imageblock img {
     max-height: 90%;
     max-width: 90%;
@@ -13,10 +14,18 @@
     transition: transform .1s;
     mix-blend-mode: multiply;
 }
+
 .extinct {
     opacity: 0.5;
 }
+
 .picturelist {
     display: flex;
     flex-flow: row nowrap;
+}
+
+.rangeblock {
+    height: 10rem;
+    width: 10rem;
+
 }

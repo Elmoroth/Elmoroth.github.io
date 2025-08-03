@@ -1,24 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class BigmenuService {
+  // Reactive signal instead of Subject
+  private toggleState = signal(false);
 
-  constructor() { }
+  // Expose as readonly if you don't want external modification
+  readonly toggleState$ = this.toggleState.asReadonly();
 
-  private toggleState = new Subject();
-  public toggleState$ = this.toggleState.asObservable();
-  private toggleVal = false;
-
-  toggle(){
-    this.toggleVal = !this.toggleVal;
-    this.toggleState.next(this.toggleVal);
+  toggle() {
+    this.toggleState.update(val => !val);
   }
-  close(){
-    this.toggleVal = false;
-    this.toggleState.next(this.toggleVal);
+
+  close() {
+    this.toggleState.set(false);
   }
 }
