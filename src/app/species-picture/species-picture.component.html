@@ -1,42 +1,40 @@
-
 <div class="picturelist">
-  <ng-container *ngIf="speciesTree.asset; then asset; else noasset"></ng-container>
-  <ng-template #asset>
-    <figure class="imageblock">
-      <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{speciesTree.asset}}/160" 
-          alt="Picture of {{speciesTree.englishName}}" 
-          loading="lazy"
-          [class.extinct] = "speciesTree.category == 'FO' || speciesTree.category == 'EX' || speciesTree.category == 'CR (PE)'"/>
-    </figure>
-  </ng-template>
-  <ng-template #noasset>
-    <ng-container *ngIf="speciesTree.picture; then pic; else nopic"></ng-container>
-    <ng-template #pic>
-      <figure class="imageblock">
-        <img src="/assets/pics/{{speciesTree.picture}}" 
-            alt="Picture of {{speciesTree.englishName}}" 
-            loading="lazy"
-            [class.extinct] = "speciesTree.category == 'FO' || speciesTree.category == 'EX' || speciesTree.category == 'CR (PE)'"/>
-      </figure>
-    </ng-template>
-    <ng-template #nopic>
-      <figure class="imageblock">
-        <img src="data:image/png;base64, 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" 
-            alt="Picture of {{speciesTree.englishName}} is not available" 
-            loading="lazy"
-            [class.extinct] = "speciesTree.category == 'FO' || speciesTree.category == 'EX' || speciesTree.category == 'CR (PE)'"/>
-      </figure>
-    </ng-template>
-  </ng-template>
 
-  <div *ngFor="let speciesentry of speciesTree.children">
-    <div *ngIf="speciesentry.asset">
-      <figure class="imageblock">
-        <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{speciesentry.asset}}/160" 
-            alt="Picture of {{speciesentry.englishName}}" 
-            loading="lazy"
-            [class.extinct] = "speciesentry.category == 'FO' || speciesentry.category == 'EX' || speciesentry.category == 'CR (PE)'"/>
-      </figure>
-    </div>
-  </div>
+  @if (speciesTree.asset) {
+  <figure class="imageblock">
+    <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{speciesTree.asset}}/160"
+      alt="Picture of {{speciesTree.englishName}}" loading="lazy" [class.extinct]="
+          speciesTree.category == 'FO' || speciesTree.category == 'EX' || speciesTree.category == 'CR (PE)'
+        " />
+  </figure>
+  } @else {
+  @if (speciesTree.picture) {
+  <figure class="imageblock">
+    <img src="/assets/pics/{{speciesTree.picture}}" alt="Picture of {{speciesTree.englishName}}" loading="lazy"
+      [class.extinct]="
+            speciesTree.category == 'FO' || speciesTree.category == 'EX' || speciesTree.category == 'CR (PE)'
+          " />
+  </figure>
+  } @else {
+  <figure class="imageblock">
+    <img
+      src="data:image/png;base64,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"
+      alt="Picture of {{speciesTree.englishName}} is not available" loading="lazy" [class.extinct]="
+            speciesTree.category == 'FO' || speciesTree.category == 'EX' || speciesTree.category == 'CR (PE)'
+          " />
+  </figure>
+  }
+  }
+
+  @for (speciesentry of speciesTree.children; track speciesentry) {
+  @if (speciesentry.asset) {
+  <figure class="imageblock">
+    <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{speciesentry.asset}}/160"
+      alt="Picture of {{speciesentry.englishName}}" loading="lazy" [class.extinct]="
+            speciesentry.category == 'FO' || speciesentry.category == 'EX' || speciesentry.category == 'CR (PE)'
+          " />
+  </figure>
+  }
+  }
+
 </div>

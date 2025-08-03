@@ -1,44 +1,64 @@
 <section class="speciesview" [attr.id]="speciesTree.name">
-  <div *ngIf="speciesTree.rank !== 'genus'">
+  @if(speciesTree.rank !== 'genus'){
+  <div>
     <header class="{{speciesTree.rank}}" class="speciestreeheader">
-      <span *ngIf="speciesTree.category == 'EX' || speciesTree.category == 'FO'" class="extinct">†</span>
+      @if(speciesTree.category == 'EX' || speciesTree.category == 'FO'){
+      <span class="extinct">†</span>
+      }
       <span class="famlatin">{{speciesTree.name}}</span>
       <span class="famenglish">{{speciesTree.englishName}}</span>
       <app-count [speciesTree]="speciesTree"></app-count>
     </header>
-    <section *ngIf="speciesTree.rank == 'Family' && (speciesTree.notes || speciesTree.asset || speciesTree.picture)" class="familyBlock">
-      <section *ngIf="speciesTree.notes" class="notes">
+    @if(speciesTree.rank == 'Family' && (speciesTree.notes || speciesTree.asset || speciesTree.picture)){
+    <section class="familyBlock">
+
+      @if(speciesTree.notes){
+      <section class="notes">
         {{speciesTree.notes}}
       </section>
-      <figure *ngIf="speciesTree.asset" class="imageblock">
-        <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{speciesTree.asset}}/320" 
-            alt="Picture of {{speciesTree.englishName}}" 
-            loading="lazy"
-            [class.extinct] = "speciesTree.category == 'FO' || speciesTree.category == 'EX' || speciesTree.category == 'CR (PE)'"/>
+      }
+      @if(speciesTree.asset){
+      <figure class="imageblock">
+        <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{speciesTree.asset}}/320"
+          alt="Picture of {{speciesTree.englishName}}" loading="lazy"
+          [class.extinct]="speciesTree.category == 'FO' || speciesTree.category == 'EX' || speciesTree.category == 'CR (PE)'" />
       </figure>
-      <figure *ngIf="speciesTree.picture" class="imageblock">
-        <img src="/assets/pics/{{speciesTree.picture}}" 
-            alt="Picture of {{speciesTree.englishName}}" 
-            loading="lazy"
-            [class.extinct] = "speciesTree.category == 'FO' || speciesTree.category == 'EX' || speciesTree.category == 'CR (PE)'"/>
+      }
+      @if(speciesTree.picture){
+      <figure class="imageblock">
+        <img src="/assets/pics/{{speciesTree.picture}}" alt="Picture of {{speciesTree.englishName}}" loading="lazy"
+          [class.extinct]="speciesTree.category == 'FO' || speciesTree.category == 'EX' || speciesTree.category == 'CR (PE)'" />
       </figure>
+      }
     </section>
-    <section *ngIf="speciesTree.rank !== 'Family' && speciesTree.notes" class="notes">
+    }
+    @if(speciesTree.rank !== 'Family' && speciesTree.notes){
+    <section class="notes">
       {{speciesTree.notes}}
     </section>
+    }
     <section class="genuslist">
-      <div *ngFor="let speciesentry of speciesTree.children">
-        <div *ngIf="speciesentry.rank == 'genus'">
+      @for (speciesentry of speciesTree.children; track speciesentry) {
+      <div>
+        @if(speciesentry.rank == 'genus'){
+        <div>
           <app-genusblock [speciesTree]="speciesentry"></app-genusblock>
         </div>
+        }
       </div>
+      }
     </section>
     <section class="speciestreelist">
-      <div *ngFor="let speciesentry of speciesTree.children">
-        <div *ngIf="speciesentry.rank !== 'genus'">
+      @for (speciesentry of speciesTree.children; track speciesentry) {
+      <div>
+        @if(speciesentry.rank !== 'genus'){
+        <div>
           <app-speciestree [speciesTree]="speciesentry"></app-speciestree>
         </div>
+        }
       </div>
+      }
     </section>
   </div>
+  }
 </section>

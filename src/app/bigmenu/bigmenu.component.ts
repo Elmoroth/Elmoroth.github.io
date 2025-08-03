@@ -1,30 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FamilyTreeService } from '../familytree/familytree.service';
-import { Observable } from 'rxjs';
 import { FamilyMenu } from '../familytree/familytree';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BigmenuService } from './bigmenu.service';
 
 @Component({
-    selector: 'app-bigmenu',
-    templateUrl: './bigmenu.component.html',
-    styleUrls: ['./bigmenu.component.css'],
-    imports: [NgFor, NgIf, AsyncPipe, RouterModule]
+  selector: 'app-bigmenu',
+  templateUrl: './bigmenu.component.html',
+  styleUrls: ['./bigmenu.component.css'],
+  imports: [RouterModule]
 })
 export class BigmenuComponent implements OnInit {
+  familyMenu = signal<FamilyMenu[]>([]);
 
-  familyMenu$!: Observable<FamilyMenu[]>;
-
-  constructor(private service: FamilyTreeService, private menuservice: BigmenuService) { }
+  constructor(
+    private service: FamilyTreeService,
+    private menuservice: BigmenuService
+  ) { }
 
   ngOnInit() {
-    this.familyMenu$ = this.service.getFamilyMenu()
-    this.familyMenu$.subscribe()
+    this.service.getFamilyMenu().subscribe({
+      next: (data) => this.familyMenu.set(data),
+      error: (err) => {
+        console.error('Failed to load family menu', err);
+        this.familyMenu.set([]);
+      }
+    });
   }
 
   toggle() {
     this.menuservice.toggle();
   }
-
 }

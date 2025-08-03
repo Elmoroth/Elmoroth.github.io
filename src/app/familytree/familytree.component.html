@@ -1,17 +1,23 @@
 <ul class="treeMenuUl">
-  <li *ngFor="let familyTree of familyTree.children" class="{{familyTree.rank}}">
+  @for (familyTree of familyTree.children; track familyTree.name) {
+  <li class="{{familyTree.rank}}">
     <div class="{{familyTree.rank}}" class="treeMenuItem">
       <a routerLink="/clade/{{familyTree.main}}" fragment="{{familyTree.name}}">
-        <figure *ngIf="familyTree.picNum" class="treeMenuImage">
+        @if(familyTree.picNum){
+        <figure class="treeMenuImage">
           <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{familyTree.picNum}}/160" loading="lazy" />
         </figure>
-        <figure *ngIf="familyTree.picName" class="treeMenuImage">
+        }
+        @if(familyTree.picName){
+        <figure class="treeMenuImage">
           <img src="/assets/pics/{{familyTree.picName}}" loading="lazy" />
         </figure>
+        }
         <span class="treeMenuLatin">{{familyTree.latin}}</span>
         <span class="treeMenuEnglish">{{familyTree.english}}</span>
       </a>
     </div>
     <app-familytree [familyTree]="familyTree"></app-familytree>
   </li>
+  }
 </ul>

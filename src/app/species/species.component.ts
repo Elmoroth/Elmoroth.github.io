@@ -1,43 +1,47 @@
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { RouterModule } from '@angular/router';
+import { Component, computed, inject } from '@angular/core';
+import { ActivatedRoute, ParamMap, RouterModule } from '@angular/router';
+import { switchMap } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
-import { Species } from './species';
 import { SpeciesService } from './species.service';
-import { SpeciestreeComponent } from '../speciestree/speciestree.component';
 
 import { FamilyTreeService } from '../familytree/familytree.service';
-import { FamilyTree } from '../familytree/familytree';
+
+import { SpeciestreeComponent } from '../speciestree/speciestree.component';
 import { FamilyTreeComponent } from '../familytree/familytree.component';
 
 @Component({
-    selector: 'app-species',
-    templateUrl: './species.component.html',
-    styleUrls: ['./species.component.css'],
-    imports: [NgIf, AsyncPipe, SpeciestreeComponent, FamilyTreeComponent, RouterModule]
+  selector: 'app-species',
+  standalone: true,
+  templateUrl: './species.component.html',
+  styleUrls: ['./species.component.css'],
+  imports: [SpeciestreeComponent, FamilyTreeComponent, RouterModule],
 })
+export class SpeciesComponent {
+  private route = inject(ActivatedRoute);
+  private speciesService = inject(SpeciesService);
+  private familyTreeService = inject(FamilyTreeService);
 
-export class SpeciesComponent implements OnInit {
-  species$!: Observable<Species>;
-  species!: Species;
-  partialtree$!: Observable<FamilyTree>;
-  partialtree!: FamilyTree;
+  // Step 1: Convert Observables to Signals
+  private speciesSignal = toSignal(
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.speciesService.getSpeciesByMain(params.get('id')!)
+      )
+    ),
+    { initialValue: null }
+  );
 
-  constructor(
-    private _speciesservice: SpeciesService,
-    private _familytreeservice: FamilyTreeService,
-    private route: ActivatedRoute
-  ) { }
+  private partialTreeSignal = toSignal(
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.familyTreeService.getPartialTree(params.get('id')!)
+      )
+    ),
+    { initialValue: null }
+  );
 
-  ngOnInit() {
-    this.species$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => this._speciesservice.getSpeciesByMain(params.get('id')!))
-    );
-    this.partialtree$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => this._familytreeservice.getPartialTree(params.get('id')!))
-    );
-  }
+  // Step 2: Use computed() to unwrap + non-null assert in one place
+  readonly species = computed(() => this.speciesSignal()!);
+  readonly partialtree = computed(() => this.partialTreeSignal()!);
 }

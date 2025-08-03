@@ -1,20 +1,26 @@
-<section *ngIf="familyMenu$ | async; let familyMenus" id="familymenu" class="famvis">
-  <div *ngFor="let familyMenu of familyMenus" class="mlist">
+<section id="familymenu" class="famvis">
+  @if (familyMenu().length > 0) {
+  @for (familyMenu of familyMenu(); track familyMenu) {
+  <div class="mlist">
     <dl class="mblock">
       <dd class="morder">
         <a routerLink="/clade/{{familyMenu.name}}" class="mlink" (click)="toggle()">
           <span>{{familyMenu.name.toUpperCase()}}</span>
         </a>
       </dd>
-      <dt *ngFor="let family of familyMenu.children" class="mfamily">
+      @for (family of familyMenu.children; track family) {
+      <dt class="mfamily">
         <div class="smallimage">
-          <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{family.picNum}}/160">
+          <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{family.picNum}}/160" />
         </div>
         <a routerLink="/clade/{{family.main}}" fragment="{{family.latin}}" class="mlink" (click)="toggle()">
           <span class="mlatin">{{family.latin}}</span>
           <span class="menglish">{{family.english}}</span>
         </a>
       </dt>
+      }
     </dl>
   </div>
+  }
+  }
 </section>

@@ -1,12 +1,16 @@
 <section class="genusblock">
   <header class="genusheader">
-    <span *ngIf="speciesTree.category == 'EX' || speciesTree.category == 'FO'" class="extinct">†</span>
+    @if(speciesTree.category == 'EX' || speciesTree.category == 'FO'){
+    <span class="extinct">†</span>
+    }
     <span class="genus">{{speciesTree.name}}</span>
     <app-count [speciesTree]="speciesTree"></app-count>
   </header>
   <section class="specieslist">
-    <div *ngFor="let speciesentry of speciesTree.children" class="speciescontainer">
+    @for (speciesentry of speciesTree.children; track speciesentry) {
+    <div class="speciescontainer">
       <app-speciesblock [speciesTree]="speciesentry"></app-speciesblock>
     </div>
+    }
   </section>
 </section>

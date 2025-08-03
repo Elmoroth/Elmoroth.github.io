@@ -7,16 +7,14 @@ import { SpeciesblockComponent } from '../speciesblock/speciesblock.component';
 import { CountComponent } from '../count/count.component';
 
 @Component({
-    selector: 'app-speciestree',
-    templateUrl: './speciestree.component.html',
-    styleUrls: ['./speciestree.component.css'],
-    imports: [
-        NgFor,
-        NgIf,
-        RouterModule,
-        GenusblockComponent,
-        CountComponent
-    ]
+  selector: 'app-speciestree',
+  templateUrl: './speciestree.component.html',
+  styleUrls: ['./speciestree.component.css'],
+  imports: [
+    RouterModule,
+    GenusblockComponent,
+    CountComponent
+  ]
 })
 export class SpeciestreeComponent {
 

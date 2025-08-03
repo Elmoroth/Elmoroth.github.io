@@ -1,12 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Species } from '../species/species';
-import { NgIf } from '@angular/common';
 
 @Component({
-    selector: 'app-count',
-    templateUrl: './count.component.html',
-    styleUrls: ['./count.component.css'],
-    imports: [NgIf]
+  selector: 'app-count',
+  templateUrl: './count.component.html',
+  styleUrls: ['./count.component.css']
 })
 export class CountComponent {
 

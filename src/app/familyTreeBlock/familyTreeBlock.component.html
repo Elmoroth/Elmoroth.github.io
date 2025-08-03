@@ -1,11 +1,11 @@
 <ul class="treeMenuUl">
   <li>
-    <div *ngIf="familyTree$ | async; let familyTree">
-      <div class="{{familyTree.rank}}" class="treeMenuItem">
-        <span class="treeMenuLatin">{{familyTree.name}}</span>
-        <span class="treeMenuEnglish">{{familyTree.english}}</span>
-      </div>
-      <app-familytree [familyTree]="familyTree"></app-familytree>
+    @if (familyTree()) {
+    <div class="{{familyTree()!.rank}} treeMenuItem">
+      <span class="treeMenuLatin">{{familyTree()!.name}}</span>
+      <span class="treeMenuEnglish">{{familyTree()!.english}}</span>
     </div>
+    <app-familytree [familyTree]="familyTree()!"></app-familytree>
+    }
   </li>
 </ul>

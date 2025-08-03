@@ -1,3 +1,5 @@
-<div *ngIf="this.loader.getLoading()" class="cssload-container">
+@if(this.loader.getLoading()){
+<div class="cssload-container">
     <div class="spinner-6"></div>
 </div>
+}

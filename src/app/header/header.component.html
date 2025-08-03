@@ -9,6 +9,7 @@
   </nav>
 </header>
 
-<div *ngIf="this.menuservice.toggleState$ | async">
+@if(this.menuservice.toggleState$ | async){
+<div>
   <app-bigmenu></app-bigmenu>
-</div>
+</div>}
