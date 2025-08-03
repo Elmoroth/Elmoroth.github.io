@@ -6,6 +6,7 @@
     <span class="genus">{{speciesTree.name}}</span>
     <app-count [speciesTree]="speciesTree"></app-count>
   </header>
+
   <section class="specieslist">
     @for (speciesentry of speciesTree.children; track speciesentry) {
     <div class="speciescontainer">

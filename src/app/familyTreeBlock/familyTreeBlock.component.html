@@ -1,11 +1,14 @@
+@let ft = familyTree();
+
 <ul class="treeMenuUl">
   <li>
-    @if (familyTree()) {
-    <div class="{{familyTree()!.rank}} treeMenuItem">
-      <span class="treeMenuLatin">{{familyTree()!.name}}</span>
-      <span class="treeMenuEnglish">{{familyTree()!.english}}</span>
+    @if (ft) {
+    <div class="{{ft.rank}} treeMenuItem">
+      <span class="treeMenuLatin">{{ft.name}}</span>
+      <span class="treeMenuEnglish">{{ft.english}}</span>
     </div>
-    <app-familytree [familyTree]="familyTree()!"></app-familytree>
+
+    <app-familytree [familyTree]="ft"></app-familytree>
     }
   </li>
 </ul>

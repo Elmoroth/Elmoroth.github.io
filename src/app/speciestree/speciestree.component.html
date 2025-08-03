@@ -9,14 +9,15 @@
       <span class="famenglish">{{speciesTree.englishName}}</span>
       <app-count [speciesTree]="speciesTree"></app-count>
     </header>
+
     @if(speciesTree.rank == 'Family' && (speciesTree.notes || speciesTree.asset || speciesTree.picture)){
     <section class="familyBlock">
-
       @if(speciesTree.notes){
       <section class="notes">
         {{speciesTree.notes}}
       </section>
       }
+
       @if(speciesTree.asset){
       <figure class="imageblock">
         <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{speciesTree.asset}}/320"
@@ -24,39 +25,36 @@
           [class.extinct]="speciesTree.category == 'FO' || speciesTree.category == 'EX' || speciesTree.category == 'CR (PE)'" />
       </figure>
       }
+
       @if(speciesTree.picture){
       <figure class="imageblock">
         <img src="/assets/pics/{{speciesTree.picture}}" alt="Picture of {{speciesTree.englishName}}" loading="lazy"
           [class.extinct]="speciesTree.category == 'FO' || speciesTree.category == 'EX' || speciesTree.category == 'CR (PE)'" />
       </figure>
       }
+
     </section>
     }
+
     @if(speciesTree.rank !== 'Family' && speciesTree.notes){
     <section class="notes">
       {{speciesTree.notes}}
     </section>
     }
+
     <section class="genuslist">
       @for (speciesentry of speciesTree.children; track speciesentry) {
-      <div>
-        @if(speciesentry.rank == 'genus'){
-        <div>
-          <app-genusblock [speciesTree]="speciesentry"></app-genusblock>
-        </div>
-        }
-      </div>
+      @if(speciesentry.rank == 'genus'){
+      <app-genusblock [speciesTree]="speciesentry"></app-genusblock>
       }
+      }
+
     </section>
     <section class="speciestreelist">
       @for (speciesentry of speciesTree.children; track speciesentry) {
-      <div>
-        @if(speciesentry.rank !== 'genus'){
-        <div>
-          <app-speciestree [speciesTree]="speciesentry"></app-speciestree>
-        </div>
-        }
-      </div>
+      @if(speciesentry.rank !== 'genus'){
+      <app-speciestree [speciesTree]="speciesentry"></app-speciestree>
+      }
       }
     </section>
   </div>

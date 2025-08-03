@@ -3,11 +3,13 @@
     <app-range [speciesTree]="speciesTree"></app-range>
     <app-iucn [category]="speciesTree.category"></app-iucn>
   </header>
+
   <section class="speciesbody">
     <a href="https://birdsoftheworld.org/bow/species/{{speciesTree.ebirdCode}}" target="_blank">
       <app-species-picture [speciesTree]="speciesTree"></app-species-picture>
     </a>
   </section>
+
   <footer class="speciesfooter">
     <span class="english">{{speciesTree.englishName}}</span>
     <span class="latin">{{speciesTree.name}}</span>
@@ -15,4 +17,5 @@
     <app-species-info [info]="speciesTree.notes"></app-species-info>
     }
   </footer>
+
 </div>

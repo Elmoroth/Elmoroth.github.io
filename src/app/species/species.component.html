@@ -1,25 +1,29 @@
+@let pt = partialtree();
+@let sp = species();
+
 <section class="speciestree">
-  @if(species()){
+  @if(sp){
   <div class="speciestreeblock">
-    <app-speciestree [speciesTree]="species()"></app-speciestree>
+    <app-speciestree [speciesTree]="sp"></app-speciestree>
   </div>
   }
-  @if(partialtree()){
+
+  @if(pt){
   <div class="partialfamilytree">
-    <div class="{{partialtree().rank}}" class="treeMenuItem">
-      <a routerLink="/clade/{{partialtree().main}}" fragment="{{partialtree().name}}">
-        @if(partialtree().picNum){
+    <div class="{{pt.rank}}" class="treeMenuItem">
+      <a routerLink="/clade/{{pt.main}}" fragment="{{pt.name}}">
+        @if(pt.picNum){
         <figure class="treeMenuImage">
-          <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{partialtree().picNum}}/160"
-            loading="lazy" />
+          <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{pt.picNum}}/160" loading="lazy" />
         </figure>
         }
 
-        <span class="treeMenuLatin">{{partialtree().latin}}</span>
-        <span class="treeMenuEnglish">{{partialtree().english}}</span>
+        <span class="treeMenuLatin">{{pt.latin}}</span>
+        <span class="treeMenuEnglish">{{pt.english}}</span>
       </a>
     </div>
-    <app-familytree [familyTree]="partialtree()"></app-familytree>
+
+    <app-familytree [familyTree]="pt"></app-familytree>
   </div>
   }
 </section>

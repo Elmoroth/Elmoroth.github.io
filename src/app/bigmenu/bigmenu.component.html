@@ -3,22 +3,26 @@
   @for (familyMenu of familyMenu(); track familyMenu) {
   <div class="mlist">
     <dl class="mblock">
+
       <dd class="morder">
         <a routerLink="/clade/{{familyMenu.name}}" class="mlink" (click)="toggle()">
           <span>{{familyMenu.name.toUpperCase()}}</span>
         </a>
       </dd>
+
       @for (family of familyMenu.children; track family) {
       <dt class="mfamily">
         <div class="smallimage">
           <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{family.picNum}}/160" />
         </div>
+
         <a routerLink="/clade/{{family.main}}" fragment="{{family.latin}}" class="mlink" (click)="toggle()">
           <span class="mlatin">{{family.latin}}</span>
           <span class="menglish">{{family.english}}</span>
         </a>
       </dt>
       }
+
     </dl>
   </div>
   }
