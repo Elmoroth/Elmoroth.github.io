@@ -16,4 +16,11 @@ export class GenusblockComponent {
 
   @Input() speciesTree!: Species;
 
+  hasDirectSpecies(): boolean {
+    return this.speciesTree?.children?.some(c => c.rank === 'species');
+  }
+  hasSubgenus(): boolean {
+    return this.speciesTree?.children?.some(c => c.rank === 'subgenus');
+  }
+
 }

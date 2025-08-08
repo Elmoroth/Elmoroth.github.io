@@ -1,17 +1,47 @@
 <section class="genusblock">
   <header class="genusheader">
-    @if(speciesTree.category == 'EX' || speciesTree.category == 'FO'){
+    @if (speciesTree.category == 'EX' || speciesTree.category == 'FO') {
     <span class="extinct">†</span>
     }
-    <span class="genus">{{speciesTree.name}}</span>
+    <span class="genus">{{ speciesTree.name }}</span>
     <app-count [speciesTree]="speciesTree"></app-count>
   </header>
 
+  <!-- Species grouped under each subgenus -->
+  @if (hasSubgenus()) {
+  <section class="subgenuslist">
+    @for (subgenus of speciesTree.children; track subgenus) {
+    @if (subgenus.rank === 'subgenus') {
+    <section class="subgenusblock">
+      <header class="subgenusheader">
+        @if (subgenus.category == 'EX' || subgenus.category == 'FO') {
+        <span class="extinct">†</span>
+        }
+        <span class="subgenus">{{ subgenus.name }}</span>
+      </header>
+      <section class="specieslist">
+        @for (speciesentry of subgenus.children; track speciesentry) {
+        <div class="speciescontainer">
+          <app-speciesblock [speciesTree]="speciesentry"></app-speciesblock>
+        </div>
+        }
+      </section>
+    </section>
+    }
+    }
+  </section>
+  }
+
+  <!-- Species directly under the genus -->
+  @if (hasDirectSpecies()) {
   <section class="specieslist">
     @for (speciesentry of speciesTree.children; track speciesentry) {
+    @if (speciesentry.rank === 'species') {
     <div class="speciescontainer">
       <app-speciesblock [speciesTree]="speciesentry"></app-speciesblock>
     </div>
     }
+    }
   </section>
+  }
 </section>

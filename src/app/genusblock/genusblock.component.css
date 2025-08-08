@@ -6,13 +6,15 @@
     margin: 0rem 1rem 1.5rem 1rem;
     background-color: #e2e4e2;
     /*background-color: #BCC2BD;*/
-    box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
 }
+
 .genusheader {
     padding: 0.5rem 0.5rem 0 0.5rem;
     font-size: .88rem;
     font-weight: 700;
 }
+
 .specieslist {
     display: flex;
     flex-flow: row wrap;
@@ -20,6 +22,29 @@
     padding: 0;
     list-style-type: none;
 }
+
 .extinct {
     padding-right: 0.1rem;
+}
+
+.subgenuslist {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    gap: 1rem 7.5rem;
+    /* horizontal gap, vertical gap */
+}
+
+.subgenusheader {
+    padding: 0.5rem 0.5rem 0 0.5rem;
+    font-size: .75rem;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.subgenusblock {
+    padding: 0;
+    margin: 0;
 }
