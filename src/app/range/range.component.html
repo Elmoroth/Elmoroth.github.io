@@ -5,7 +5,9 @@
   <span class="range">{{ speciesTree.rangeShort }}</span>
   <span class="rangetooltip">
     <span [innerHTML]="speciesTree.rangeDescription"></span>
+    @if(speciesTree.category == 'FO' || speciesTree.category == 'EX'){
     <br />
     <strong>Click to open range map.</strong>
+    }
   </span>
 </a>
