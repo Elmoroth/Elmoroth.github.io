@@ -191,6 +191,7 @@ export class FamilyTreeService {
 
     return subtree;
   }
+
   private cloneFully(clade: FamilyTree): FamilyTree {
     return {
       ...clade,
@@ -205,7 +206,9 @@ export class FamilyTreeService {
 
     return {
       ...clade,
-      children: clade.children?.map(c => this.cloneUntilIsMain(c)) ?? []
+      children: clade.children
+        ?.filter(c => c.extinct === 'FALSE') // exclude extinct children
+        .map(c => this.cloneUntilIsMain(c)) ?? []
     };
   }
 
