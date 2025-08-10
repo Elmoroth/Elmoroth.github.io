@@ -7,6 +7,19 @@
     <app-count [speciesTree]="speciesTree"></app-count>
   </header>
 
+  <!-- Species directly under the genus -->
+  @if (hasDirectSpecies()) {
+  <section class="specieslist">
+    @for (speciesentry of speciesTree.children; track speciesentry) {
+    @if (speciesentry.rank === 'species') {
+    <div class="speciescontainer">
+      <app-speciesblock [speciesTree]="speciesentry"></app-speciesblock>
+    </div>
+    }
+    }
+  </section>
+  }
+
   <!-- Species grouped under each subgenus -->
   @if (hasSubgenus()) {
   <section class="subgenuslist">
@@ -27,19 +40,6 @@
         }
       </section>
     </section>
-    }
-    }
-  </section>
-  }
-
-  <!-- Species directly under the genus -->
-  @if (hasDirectSpecies()) {
-  <section class="specieslist">
-    @for (speciesentry of speciesTree.children; track speciesentry) {
-    @if (speciesentry.rank === 'species') {
-    <div class="speciescontainer">
-      <app-speciesblock [speciesTree]="speciesentry"></app-speciesblock>
-    </div>
     }
     }
   </section>
