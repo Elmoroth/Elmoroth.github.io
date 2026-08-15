@@ -2,17 +2,46 @@
 @let sp = species();
 
 <section class="speciestree-container">
-  <!-- Floating toggle button to hide/show tree sidebar -->
+  <div class="tree-controls-bar">
   @if (pt) {
-    <button 
-      type="button" 
-      class="tree-toggle-btn" 
-      (click)="toggleTreeSidebar()"
-      [attr.aria-expanded]="showTreeSidebar()"
-    >
+    <button type="button" class="tree-toggle-btn" (click)="toggleTreeSidebar()">
       {{ showTreeSidebar() ? 'Hide Tree' : 'Show Tree' }}
     </button>
   }
+
+  <button type="button" class="fossil-toggle-btn" [class.active]="showFossils()" (click)="toggleFossils()">
+    <span class="fossil-icon">†</span>
+    {{ showFossils() ? 'Hide Fossils' : 'Show Fossils' }}
+  </button>
+
+  @if (showFossils()) {
+    <div class="epoch-dropdown-wrapper">
+      <button type="button" class="epoch-menu-btn" (click)="toggleEpochMenu()">
+        Epochs ▾
+      </button>
+
+      @if (showEpochMenu()) {
+        <div class="epoch-popover">
+          <div class="epoch-popover-header">
+            <span>Filter Eras</span>
+            <button type="button" class="text-link" (click)="selectAllEpochs(true)">All</button>
+            <button type="button" class="text-link" (click)="selectAllEpochs(false)">None</button>
+          </div>
+          @for (epoch of epochKeys; track epoch) {
+            <label class="epoch-checkbox-label">
+              <input 
+                type="checkbox" 
+                [checked]="epochFilters()[epoch]" 
+                (change)="toggleEpoch(epoch)" 
+              />
+              {{ epoch | titlecase }}
+            </label>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>
 
   @if (sp) {
     <div class="speciestreeblock" [class.full-width]="!showTreeSidebar() || !pt">

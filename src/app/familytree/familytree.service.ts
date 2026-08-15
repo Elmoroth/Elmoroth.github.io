@@ -42,26 +42,26 @@ export class FamilyTreeService {
   private readonly http = inject(HttpClient);
   private readonly url = environment.familytreeApiUrl;
 
-  private familyTree$?: Observable<FamilyTree>;
+  /** Single cached observable for raw parsed tree */
+  private readonly familyTree$: Observable<FamilyTree> = this.fetchAndBuildTree().pipe(
+    shareReplay(1)
+  );
 
-  /** Returns the cached tree observable or initiates a cold request */
+  /** Returns the cached family tree observable */
   getFamilies(): Observable<FamilyTree> {
-    if (!this.familyTree$) {
-      this.familyTree$ = this.getFamiliesFromGoogle();
-    }
     return this.familyTree$;
   }
 
   getFamilyMenu(): Observable<FamilyMenu[]> {
     return this.getFamilies().pipe(
-      map((clade) => this.buildMenuStructure(clade))
+      map((root) => this.buildMenuStructure(root))
     );
   }
 
   getPartialTree(name: string): Observable<FamilyTree> {
     return this.getFamilies().pipe(
-      map((clade) => {
-        const path = this.findPathToNode(name, clade);
+      map((root) => {
+        const path = this.findPathToNode(name, root);
         if (!path) return EMPTY_TREE;
 
         const ancestorLevel = this.findClimbUntilNextMain(path);
@@ -79,12 +79,12 @@ export class FamilyTreeService {
     let currentMenu: FamilyMenu | null = null;
 
     const traverse = (node: FamilyTree): void => {
-      if (node.isMain === 'TRUE') {
+      if (this.isTrue(node.isMain)) {
         currentMenu = { name: node.name, children: [] };
         menus.push(currentMenu);
       }
 
-      if (node.rank === 'Family' && node.extinct === 'FALSE' && currentMenu) {
+      if (node.rank === 'Family' && !this.isTrue(node.extinct) && currentMenu) {
         currentMenu.children.push({
           main: node.main,
           latin: node.latin,
@@ -102,7 +102,7 @@ export class FamilyTreeService {
   }
 
   /* -------------------------------------------------------------------------- */
-  /*                          Subtree Navigation Helpers                       */
+  /*                      Subtree Navigation Helpers                           */
   /* -------------------------------------------------------------------------- */
 
   private findPathToNode(
@@ -134,7 +134,7 @@ export class FamilyTreeService {
       const child = path[i + 1];
       const index = parent.children?.findIndex((c) => c.name === child.name) ?? -1;
 
-      if (parent.isMain === 'TRUE') {
+      if (this.isTrue(parent.isMain)) {
         fallbackIndex = i;
       }
 
@@ -152,12 +152,12 @@ export class FamilyTreeService {
   }
 
   private subtreeContainsMain(node: FamilyTree): boolean {
-    if (node.isMain === 'TRUE') return true;
+    if (this.isTrue(node.isMain)) return true;
     return node.children?.some((c) => this.subtreeContainsMain(c)) ?? false;
   }
 
   private rebuildSubtree(path: FamilyTree[], startLevel: number): FamilyTree {
-    let subtree = this.cloneFully(path[path.length - 1]);
+    let subtree = structuredClone(path[path.length - 1]);
 
     for (let i = path.length - 2; i >= startLevel; i--) {
       const current = path[i];
@@ -173,15 +173,8 @@ export class FamilyTreeService {
     return subtree;
   }
 
-  private cloneFully(clade: FamilyTree): FamilyTree {
-    return {
-      ...clade,
-      children: clade.children?.map((c) => this.cloneFully(c)) ?? [],
-    };
-  }
-
   private cloneUntilIsMain(clade: FamilyTree): FamilyTree {
-    if (clade.isMain === 'TRUE' || clade.rank === 'Order') {
+    if (this.isTrue(clade.isMain) || clade.rank === 'Order') {
       return { ...clade, children: [] };
     }
 
@@ -189,16 +182,16 @@ export class FamilyTreeService {
       ...clade,
       children:
         clade.children
-          ?.filter((c) => c.extinct === 'FALSE')
+          ?.filter((c) => !this.isTrue(c.extinct))
           .map((c) => this.cloneUntilIsMain(c)) ?? [],
     };
   }
 
   /* -------------------------------------------------------------------------- */
-  /*                          Data Fetching & Parsing                           */
+  /*                      Data Fetching & Parsing                               */
   /* -------------------------------------------------------------------------- */
 
-  private getFamiliesFromGoogle(): Observable<FamilyTree> {
+  private fetchAndBuildTree(): Observable<FamilyTree> {
     return this.http.get<GoogleSheetResult>(this.url).pipe(
       map((data: GoogleSheetResult) => {
         const idToFamilyMap = new Map<string, FamilyTree>();
@@ -206,7 +199,7 @@ export class FamilyTreeService {
 
         // 1. Map raw sheet rows to FamilyTree objects
         (data.values ?? []).slice(1).forEach((entry: any[]) => {
-          const isExtinct = entry[COL.EXTINCT] === 'TRUE';
+          const extinctRaw = entry[COL.EXTINCT] ?? '';
           const name = entry[COL.NAME] ?? '';
           const node: FamilyTree = {
             main: '',
@@ -215,13 +208,13 @@ export class FamilyTreeService {
             rank: entry[COL.RANK] ?? '',
             english: entry[COL.ENGLISH] ?? '',
             dutch: entry[COL.DUTCH] ?? '',
-            extinct: entry[COL.EXTINCT] ?? '',
+            extinct: extinctRaw,
             isMain: entry[COL.IS_MAIN] ?? '',
             seen: entry[COL.SEEN] ?? '',
             picNum: entry[COL.PIC_NUM] ?? '',
             picName: entry[COL.PIC_NAME] ?? '',
             children: [],
-            latin: isExtinct ? `† ${name}` : name,
+            latin: this.isTrue(extinctRaw) ? `† ${name}` : name,
           };
 
           tempEntries.push(node);
@@ -247,13 +240,12 @@ export class FamilyTreeService {
         this.propagateMain(root, '');
 
         return root;
-      }),
-      shareReplay(1)
+      })
     );
   }
 
   private propagateMain(node: FamilyTree, inheritedMain: string): void {
-    let newMain = node.isMain === 'TRUE' ? node.name : inheritedMain;
+    let newMain = this.isTrue(node.isMain) ? node.name : inheritedMain;
 
     if (!newMain) {
       newMain = this.findFirstChildMain(node.children ?? []) ?? '';
@@ -261,18 +253,29 @@ export class FamilyTreeService {
 
     node.main = newMain;
 
-    const nextInheritedMain = node.isMain === 'TRUE' ? node.name : inheritedMain;
+    const nextInheritedMain = this.isTrue(node.isMain) ? node.name : inheritedMain;
     node.children?.forEach((child) => this.propagateMain(child, nextInheritedMain));
   }
 
   private findFirstChildMain(children: FamilyTree[]): string | null {
     for (const child of children) {
-      if (child.isMain === 'TRUE') {
+      if (this.isTrue(child.isMain)) {
         return child.name;
       }
       const deeper = this.findFirstChildMain(child.children ?? []);
       if (deeper) return deeper;
     }
     return null;
+  }
+
+  /** Normalizes boolean-like cell values from Google Sheets */
+  private isTrue(val: any): boolean {
+    if (typeof val === 'boolean') return val;
+    if (typeof val === 'string') {
+      const clean = val.trim().toUpperCase();
+      return clean === 'TRUE' || clean === '1' || clean === 'X';
+    }
+    if (typeof val === 'number') return val === 1;
+    return false;
   }
 }

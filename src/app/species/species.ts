@@ -1,32 +1,43 @@
 export interface Species {
-    rank: string,
-    parent?: string,
-    name: string,
-    genus?: string,
-    species?: string,
-    englishName?: string,
-    nederlands?: string,
-    category?: string,
-    authority?: string,
-    notes?: string,
-    rangeShort?: string,
-    rangeDescription?: string,
-    picture?: string,
-    asset?: string,
-    ebirdCode?: string,
-    children?: Species[],
-    countExtant?: number,
-    countExtinct?: number,
-    countFossil?: number
+  rank: string;
+  parent?: string;
+  name: string;
+  genus?: string;
+  species?: string;
+  englishName?: string;
+  nederlands?: string;
+  category?: string;
+
+  // Geological Epoch Flags
+  cretaceous?: boolean;
+  paleocene?: boolean;
+  eocene?: boolean;
+  oligocene?: boolean;
+  miocene?: boolean;
+  pliocene?: boolean;
+  pleistocene?: boolean;
+  holocene?: boolean;
+
+  authority?: string;
+  notes?: string;
+  rangeShort?: string;
+  rangeDescription?: string;
+  picture?: string;
+  asset?: string;
+  ebirdCode?: string;
+  children?: Species[];
+  countExtant?: number;
+  countExtinct?: number;
+  countFossil?: number;
 }
 
 export interface Clade {
-    name: string,
-    rank: string
+  name: string;
+  rank: string;
 }
 
 export interface GoogleSheetResult {
-    range: string,
-    majorDimension: string,
-    values: any[][]
+  range: string;
+  majorDimension: string;
+  values: any[][];
 }

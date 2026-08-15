@@ -3,22 +3,44 @@ import {
   ChangeDetectionStrategy, 
   inject, 
   signal, 
+  computed, 
   ElementRef, 
   OnDestroy,
-  effect 
+  afterRenderEffect
 } from '@angular/core';
-import { ActivatedRoute, ParamMap, RouterModule } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { switchMap, of } from 'rxjs';
-import { SpeciesService } from './species.service';
+import { TitleCasePipe } from '@angular/common';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { toSignal, toObservable } from '@angular/core/rxjs-interop';
+import { switchMap, of, combineLatest, map } from 'rxjs';
+import { SpeciesService, EpochFilters } from './species.service';
 import { FamilyTreeService } from '../familytree/familytree.service';
 import { SpeciestreeComponent } from '../speciestree/speciestree.component';
 import { FamilyTreeComponent } from '../familytree/familytree.component';
+import { Species } from './species';
+import { FamilyTree } from '../familytree/familytree';
+
+export type EpochKey = keyof EpochFilters['epochs'];
+
+export const EPOCH_KEYS: EpochKey[] = [
+  'cretaceous',
+  'paleocene',
+  'eocene',
+  'oligocene',
+  'miocene',
+  'pliocene',
+  'pleistocene',
+  'holocene',
+];
 
 @Component({
   selector: 'app-species',
   standalone: true,
-  imports: [SpeciestreeComponent, FamilyTreeComponent, RouterModule],
+  imports: [
+    SpeciestreeComponent, 
+    FamilyTreeComponent, 
+    RouterModule, 
+    TitleCasePipe
+  ],
   templateUrl: './species.component.html',
   styleUrls: ['./species.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,64 +51,106 @@ export class SpeciesComponent implements OnDestroy {
   private readonly familyTreeService = inject(FamilyTreeService);
   private readonly elementRef = inject(ElementRef);
 
+  readonly epochKeys = EPOCH_KEYS;
+
   private observer?: IntersectionObserver;
   private isProgrammaticScroll = false;
   private programmaticScrollTimeout?: ReturnType<typeof setTimeout>;
   private pendingCladeId: string | null = null;
 
+  // UI State Signals
   readonly activeCladeId = signal<string | null>(null);
   readonly showTreeSidebar = signal<boolean>(true);
+  readonly showFossils = signal<boolean>(true);
+  readonly showEpochMenu = signal<boolean>(false);
 
-  private readonly routeId$ = this.route.paramMap.pipe(
-    switchMap((params: ParamMap) => {
-      const id = params.get('id');
-      return id ? of(id) : of(null);
-    })
+  readonly epochFilters = signal<EpochFilters['epochs']>({
+    cretaceous: false,
+    paleocene: false,
+    eocene: false,
+    oligocene: false,
+    miocene: false,
+    pliocene: false,
+    pleistocene: true,
+    holocene: true,
+  });
+
+  readonly activeFilters = computed<EpochFilters>(() => ({
+    showFossils: this.showFossils(),
+    epochs: this.epochFilters(),
+  }));
+
+  // Route reactive signals
+  readonly routeId$ = this.route.paramMap.pipe(
+    map((params) => params.get('id'))
   );
 
-  // Capture URL fragments (e.g., #Turdinae)
-  private readonly fragment$ = this.route.fragment;
+  readonly currentFragment = toSignal(this.route.fragment, { initialValue: null });
 
-  readonly species = toSignal(
-    this.routeId$.pipe(
-      switchMap((id) => (id ? this.speciesService.getSpeciesByMain(id) : of(null)))
+  // Strictly typed data signals using toSignal
+  readonly species = toSignal<Species | null>(
+    combineLatest([this.routeId$, toObservable(this.activeFilters)]).pipe(
+      switchMap(([id, filters]) =>
+        id ? this.speciesService.getSpeciesByMain(id, filters) : of(null)
+      )
     ),
     { initialValue: null }
   );
 
-  readonly partialtree = toSignal(
+  readonly partialtree = toSignal<FamilyTree | null>(
     this.routeId$.pipe(
       switchMap((id) => (id ? this.familyTreeService.getPartialTree(id) : of(null)))
     ),
     { initialValue: null }
   );
 
-  readonly currentFragment = toSignal(this.fragment$, { initialValue: null });
-
   constructor() {
-    effect(() => {
+    afterRenderEffect(() => {
       const spData = this.species();
       const ptData = this.partialtree();
       const frag = this.currentFragment();
 
       if (spData && ptData) {
-        // Wait 2 macro-ticks (~100ms) for Angular & sub-components to complete DOM render
-        setTimeout(() => {
-          this.setupScrollSync();
+        this.setupScrollSync();
 
-          // If there's a pending scroll target or URL fragment, execute scroll now
-          const targetClade = frag || this.pendingCladeId;
-          if (targetClade) {
-            this.scrollToClade(targetClade);
-            this.pendingCladeId = null;
-          }
-        }, 100);
+        const targetClade = frag || this.pendingCladeId;
+        if (targetClade) {
+          this.scrollToClade(targetClade);
+          this.pendingCladeId = null;
+        }
       }
     });
   }
 
   toggleTreeSidebar(): void {
     this.showTreeSidebar.update((visible) => !visible);
+  }
+
+  toggleFossils(): void {
+    this.showFossils.update((show) => {
+      if (show) this.showEpochMenu.set(false);
+      return !show;
+    });
+  }
+
+  toggleEpochMenu(): void {
+    this.showEpochMenu.update((visible) => !visible);
+  }
+
+  toggleEpoch(epoch: EpochKey): void {
+    this.epochFilters.update((state) => ({
+      ...state,
+      [epoch]: !state[epoch],
+    }));
+  }
+
+  selectAllEpochs(selected: boolean): void {
+    const updated = this.epochKeys.reduce((acc, key) => {
+      acc[key] = selected;
+      return acc;
+    }, {} as EpochFilters['epochs']);
+
+    this.epochFilters.set(updated);
   }
 
   private setupScrollSync(): void {
@@ -97,7 +161,6 @@ export class SpeciesComponent implements OnDestroy {
 
     this.observer = new IntersectionObserver(
       (entries) => {
-        // CRITICAL FIX: Ignore observer callbacks during programmatic scroll
         if (this.isProgrammaticScroll) return;
 
         entries.forEach((entry) => {
@@ -111,7 +174,7 @@ export class SpeciesComponent implements OnDestroy {
         });
       },
       {
-        rootMargin: '-130px 0px -70% 0px', // Offset matches stacked header height (130px)
+        rootMargin: '-130px 0px -70% 0px',
         threshold: 0,
       }
     );
@@ -124,22 +187,18 @@ export class SpeciesComponent implements OnDestroy {
       `[data-tree-node="${cladeId}"]`
     );
 
-    if (sidebarNode) {
-      sidebarNode.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest', // Keeps sidebar scrolling smooth without whole-page jumps
-        inline: 'nearest',
-      });
-    }
+    sidebarNode?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'nearest',
+    });
   }
 
   onSidebarNodeClick(cladeId: string): void {
     const target = this.elementRef.nativeElement.querySelector(`[data-clade="${cladeId}"]`);
-
     if (target) {
       this.scrollToClade(cladeId);
     } else {
-      // Store cladeId to execute scroll once signals update the DOM
       this.pendingCladeId = cladeId;
     }
   }

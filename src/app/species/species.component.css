@@ -59,14 +59,23 @@
   background-color: #999999;
 }
 
-/* Floating toggle button */
-.tree-toggle-btn {
+/* Floating Actions Bar */
+.tree-controls-bar {
   position: fixed;
   bottom: 1.5rem;
   right: 1.5rem;
   z-index: 100;
-  background-color: #be363a;
-  color: #ffffff;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Shared Floating Action Button Base */
+.tree-toggle-btn,
+.fossil-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   border: none;
   padding: 0.6rem 1.2rem;
   border-radius: 20px;
@@ -74,7 +83,13 @@
   font-size: 0.88rem;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: transform 0.15s ease, background-color 0.15s ease;
+  transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Sidebar Toggle Styles */
+.tree-toggle-btn {
+  background-color: #be363a;
+  color: #ffffff;
 }
 
 .tree-toggle-btn:hover {
@@ -82,7 +97,78 @@
   transform: translateY(-2px);
 }
 
-.tree-toggle-btn:focus-visible {
+/* Fossil Toggle Styles */
+.fossil-toggle-btn {
+  background-color: #ffffff;
+  color: #333333;
+  border: 1px solid #cccccc;
+}
+
+.fossil-toggle-btn:hover {
+  background-color: #f2f2f2;
+  transform: translateY(-2px);
+}
+
+.fossil-toggle-btn.active {
+  background-color: #542344; /* Extinct/Fossil theme color */
+  color: #ffffff;
+  border-color: #542344;
+}
+
+.fossil-icon {
+  font-weight: bold;
+}
+
+/* Focus States for Accessibility */
+.tree-toggle-btn:focus-visible,
+.fossil-toggle-btn:focus-visible {
   outline: 2px solid #000000;
   outline-offset: 2px;
+}
+
+.epoch-dropdown-wrapper {
+  position: relative;
+}
+
+.epoch-menu-btn {
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.epoch-popover {
+  position: absolute;
+  bottom: 120%;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 0.75rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 160px;
+}
+
+.epoch-popover-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.35rem;
+}
+
+.epoch-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  cursor: pointer;
 }
