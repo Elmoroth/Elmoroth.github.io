@@ -1,0 +1,2 @@
+import{At as cv,Ft as dy,h as Do,jt as da}from"./chunk-CYnwQerP.js";var s=(()=>{class e{static{this.ɵfac=function(t){return new(t||e)}}static{this.ɵcmp=dy({type:e,selectors:[[`app-page-not-found`]],standalone:!1,decls:2,vars:0,template:function(t,c){t&1&&(Do(0,`p`),cv(1,` Page not found!
+`),da())},encapsulation:2,changeDetection:1})}}return e})();export{s as PageNotFoundComponent};
