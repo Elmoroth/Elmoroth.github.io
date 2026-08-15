@@ -1,25 +1,42 @@
 <ul class="treeMenuUl">
-  @for (familyTree of familyTree.children; track familyTree.name) {
-  <li class="{{familyTree.rank}}">
-    <div class="{{familyTree.rank}}" class="treeMenuItem">
-      <a routerLink="/clade/{{familyTree.main}}" fragment="{{familyTree.name}}">
-        @if(familyTree.picNum){
-        <figure class="treeMenuImage">
-          <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{familyTree.picNum}}/160" loading="lazy" />
-        </figure>
-        }
+  @for (child of familyTree.children; track child.name) {
+    <li 
+      [class]="child.rank" 
+      [attr.data-tree-node]="child.latin || child.name"
+    >
+      <div [class]="'treeMenuItem ' + child.rank">
+        <a [routerLink]="['/clade', child.main]" [fragment]="child.name">
+          @if (child.picNum) {
+            <figure class="treeMenuImage">
+              <img 
+                [src]="'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/' + child.picNum + '/160'" 
+                [alt]="child.english || child.latin"
+                loading="lazy" 
+                decoding="async"
+              />
+            </figure>
+          }
 
-        @if(familyTree.picName){
-        <figure class="treeMenuImage">
-          <img src="/assets/pics/{{familyTree.picName}}" loading="lazy" />
-        </figure>
-        }
+          @if (child.picName) {
+            <figure class="treeMenuImage">
+              <img 
+                [src]="'/assets/pics/' + child.picName" 
+                [alt]="child.english || child.latin"
+                loading="lazy" 
+                decoding="async"
+              />
+            </figure>
+          }
 
-        <span class="treeMenuLatin">{{familyTree.latin}}</span>
-        <span class="treeMenuEnglish">{{familyTree.english}}</span>
-      </a>
-    </div>
-    <app-familytree [familyTree]="familyTree"></app-familytree>
-  </li>
+          <span class="treeMenuLatin">{{ child.latin }}</span>
+          <span class="treeMenuEnglish">{{ child.english }}</span>
+        </a>
+      </div>
+
+      <!-- Recursive tree rendering -->
+      @if (child.children && child.children.length > 0) {
+        <app-familytree [familyTree]="child"></app-familytree>
+      }
+    </li>
   }
 </ul>

@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, computed } from '@angular/core';
+import { Component, OnInit, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { FamilyTreeService } from '../familytree/familytree.service';
 import { FamilyTree } from '../familytree/familytree';
 import { FamilyTreeComponent } from '../familytree/familytree.component';
@@ -7,6 +7,7 @@ import { FamilyTreeComponent } from '../familytree/familytree.component';
   selector: 'app-familyTreeBlock',
   templateUrl: './familyTreeBlock.component.html',
   styleUrls: ['./familyTreeBlock.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FamilyTreeComponent]
 })
 export class FamilyTreeBlockComponent implements OnInit {

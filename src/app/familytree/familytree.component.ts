@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FamilyTree } from './familytree';
 import { RouterModule } from '@angular/router';
 
@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
   selector: 'app-familytree',
   templateUrl: './familytree.component.html',
   styleUrls: ['./familytree.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterModule]
 })
 

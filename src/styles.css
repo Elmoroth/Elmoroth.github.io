@@ -1,20 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
-
-
-* {
+/* Universal Box Sizing & Reset */
+*, 
+*::before, 
+*::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-body {
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
-  /*
-  overflow: hidden;
-  height: 100vh;
-  */
+/* Root Layout & Overflow Containment */
+html {
+  scroll-behavior: smooth;
 }
-a:hover, a:visited, a:link, a:active
-{
+
+html, 
+body {
+  width: 100%;
+  max-width: 100%;
+  /* CRITICAL: 'overflow-x: clip' prevents horizontal scrollbars WITHOUT breaking position: sticky */
+  overflow-x: clip; 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  color: #1a1a1a;
+  background-color: #f8f9fa;
+}
+
+/* Global Link Defaults */
+a:hover, 
+a:visited, 
+a:link, 
+a:active {
   text-decoration: none;
-  color: black;
+  color: inherit;
+}
+
+/* Base Anchor Navigation Offset for Stacked Sticky Headers */
+[id],
+[data-clade],
+.speciesview,
+.family-block,
+.subfamily-block,
+.tribe-block,
+.genusblock {
+  scroll-margin-top: 130px; /* Accounts for combined height of main header + family + subfamily + tribe */
 }

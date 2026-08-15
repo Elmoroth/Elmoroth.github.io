@@ -1,20 +1,14 @@
-import { Component } from '@angular/core';
-import { BigmenuService } from './bigmenu/bigmenu.service';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './header/header.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @Component({
-    selector: 'app-root',
-    template: `
-    <main>
-      <app-header></app-header>
-      <div class="main">
-        <router-outlet></router-outlet>
-        <app-spinner></app-spinner>
-      </div>
-    </main>
-  `,
-    styleUrls: ['./app.component.css'],
-    standalone: false
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, HeaderComponent, SpinnerComponent],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
-  constructor(private menuservice: BigmenuService){}
-}
+export class AppComponent {}

@@ -1,59 +1,53 @@
+/* Ensure the parent card serves as the positioning anchor */
+.speciesblock {
+  position: relative; /* Already present, required for top-right anchoring */
+}
+
+/* Position the IUCN badge in the top-right corner */
 .iucnblock {
-    top: .5rem;
-    right: .5rem;
-    border-radius: 10rem;
-    padding: 0rem .4rem .2rem .4rem;
-    display: inline-flex;
-    justify-content: center;
-    vertical-align: middle;
-    background-color: #d1e744;
-    height: 0.75rem;
-    float: right;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem 0.45rem;
+  min-height: 1.1rem;
+  height: auto;
+  border-radius: 20px;
+  line-height: 1;
+  pointer-events: none; /* Prevents badge from interfering with card clicks */
 }
+
 .iucn {
-    font-size: .63rem;
-    font-weight: 700;
-    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 0.63rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  color: #1a1a1a;
 }
-.iucn-LC {
-    background-color:#68bb53;
-}
-.iucn-NT {
-    background-color:#d1e744;
-}
-.iucn-VU {
-    background-color:#e5d42d;
-}
-.iucn-EN {
-    background-color:#e77b4d;
-}
-.iucn-CR {
-    background-color:#b61917;
-}
-.iucn-EW {
-    background-color:#542344;
-}
-.iucn-EX {
-    background-color:#000;
-}
-.iucn-FO {
-    background-color:#000;
-}
-.iucn-DD {
-    background-color:#595959;
-}
-.iucn-CR .iucn {
-    color:#fff;
-}
-.iucn-EW .iucn {
-    color:#fff;
-}
-.iucn-EX .iucn {
-    color:#fff;
-}
-.iucn-FO .iucn {
-    color:#fff;
-}
+
+/* Category Background Colors */
+.iucn-LC { background-color: #68bb53; }
+.iucn-NT { background-color: #d1e744; }
+.iucn-VU { background-color: #e5d42d; }
+.iucn-EN { background-color: #e77b4d; }
+.iucn-CR { background-color: #b61917; }
+.iucn-EW { background-color: #542344; }
+.iucn-EX { background-color: #000000; }
+.iucn-FO { background-color: #000000; }
+.iucn-DD { background-color: #595959; }
+
+/* White Text for Dark Badges */
+.iucn-EN .iucn,
+.iucn-CR .iucn,
+.iucn-EW .iucn,
+.iucn-EX .iucn,
+.iucn-FO .iucn,
 .iucn-DD .iucn {
-    color:#fff;
+  color: #ffffff;
 }

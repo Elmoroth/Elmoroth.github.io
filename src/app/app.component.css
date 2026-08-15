@@ -1,20 +1,15 @@
 :host {
-  --content-padding: 10px;
-}
-/*
-.main {
-  display: flex;
-  height: calc(100vh - 60px);
+  display: block;
   width: 100%;
-  overflow: hidden;
+  min-height: 100dvh;
+  background-color: #f4f4f4;
 }
-*/
 
-main {
-  max-width: calc(100vw - 100px);
+.main-content {
+  min-height: calc(100dvh - 58px);
+  width: min(calc(100% - 2rem), 1400px);
   margin: 0 auto;
-  box-shadow: 0 0 13px 3px rgba(0,0,0,.23);
-  min-height: 100vh;
   position: relative;
-  
+  box-shadow: 0 0 13px 3px rgba(0, 0, 0, 0.23);
+  background-color: #ffffff;
 }

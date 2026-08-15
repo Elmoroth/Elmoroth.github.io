@@ -1,32 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BigmenuComponent } from '../bigmenu/bigmenu.component';
-import { SpeciesService } from '../species/species.service';
 import { BigmenuService } from '../bigmenu/bigmenu.service';
-import { AsyncPipe } from '@angular/common';
 import { CountComponent } from '../count/count.component';
+import { SpeciesService } from '../species/species.service';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
   standalone: true,
   imports: [RouterModule, BigmenuComponent, CountComponent, AsyncPipe],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  speciesTree$ = this.speciesService.getSpeciesByMain('Aves');
-  toggleState = this.menuservice.toggleState$; // this is a signal now
+  private readonly speciesService = inject(SpeciesService);
+  readonly menuService = inject(BigmenuService);
 
-  constructor(
-    public menuservice: BigmenuService,
-    private speciesService: SpeciesService
-  ) { }
+  readonly speciesTree$ = this.speciesService.getSpeciesByMain('Aves');
+  readonly isMenuOpen = this.menuService.isOpen;
 
-  toggle() {
-    this.menuservice.toggle();
+  toggleMenu(): void {
+    this.menuService.toggle();
   }
 
-  closeMenu() {
-    this.menuservice.close();
+  closeMenu(): void {
+    this.menuService.close();
   }
 }

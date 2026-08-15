@@ -1,58 +1,88 @@
-.speciesview {
-    height: 100%;
-    flex-grow: 10;
+:host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
 }
-.speciestree {
-    display: flex;
+
+.speciestree-container {
+  display: flex;
+  width: 100%;
+  gap: 1.5rem;
+  position: relative;
+  align-items: flex-start;
 }
-.partialfamilytree {
-    width: calc(500px - 2em);
-    right: 50px;
-    position: fixed;
-    overflow-y: scroll;
-    height: calc(100% - 58px);
-    padding: 0em 1em;
-}
+
+/* Main content block expands dynamically */
 .speciestreeblock {
-    width: calc(100% - 500px);
+  flex: 1 1 0%;
+  min-width: 0;
+  width: 100%;
+  transition: flex 0.2s ease-in-out;
 }
 
-a:hover, a:visited, a:link, a:active
-{
-    text-decoration: none;
-    color: black;
-}
-.treeMenuItem {
-    display: flex;
-    padding: 0em 1rem;
-    height: 2.25rem;
-}
-.treeMenuItem a {
-    display: flex;
-    height: 100%;
-}
-.treeMenuLatin {
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
-    font-style: italic;
-    align-self: center;
-    color: #646464;
-}
-.treeMenuEnglish {
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
-    font-weight: bold;
-    align-self: center;
+.speciestreeblock.full-width {
+  flex: 1 1 100%;
 }
 
-.treeMenuItem::before{
-    content       : '';
-    display       : block;
-    position      : absolute;
-    top           : 1rem;
-    left          : 0.75rem;
-    width         : 0.6rem;
-    height        : 0.6rem;
-    border-radius : 50%;
-    background    : #ddd;
+/* Sticky tree sidebar that scrolls internally */
+.partialfamilytree {
+  width: 360px; /* Slightly wider to give room for multiline text */
+  flex-shrink: 0;
+  position: sticky;
+  top: 60px; /* Aligns below header bar */
+  height: calc(100vh - 70px);
+  max-height: calc(100vh - 70px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #ffffff;
+  padding: 1rem 0.5rem;
+  border-left: 1px solid #e0e0e0;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
+
+/* Custom subtle scrollbar for sidebar */
+.partialfamilytree::-webkit-scrollbar {
+  width: 6px;
+}
+
+.partialfamilytree::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.partialfamilytree::-webkit-scrollbar-thumb {
+  background-color: #cccccc;
+  border-radius: 3px;
+}
+
+.partialfamilytree::-webkit-scrollbar-thumb:hover {
+  background-color: #999999;
+}
+
+/* Floating toggle button */
+.tree-toggle-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
+  background-color: #be363a;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.tree-toggle-btn:hover {
+  background-color: #a02c30;
+  transform: translateY(-2px);
+}
+
+.tree-toggle-btn:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
 }

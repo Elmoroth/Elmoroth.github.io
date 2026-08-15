@@ -1,26 +1,26 @@
-import { Component, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, computed } from '@angular/core';
 import { Species } from '../species/species';
 import { SpeciesblockComponent } from '../speciesblock/speciesblock.component';
 import { CountComponent } from '../count/count.component';
 
 @Component({
   selector: 'app-genusblock',
+  standalone: true,
+  imports: [SpeciesblockComponent, CountComponent],
   templateUrl: './genusblock.component.html',
   styleUrls: ['./genusblock.component.css'],
-  imports: [
-    SpeciesblockComponent,
-    CountComponent
-  ]
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenusblockComponent {
+  // Modern signal input
+  readonly speciesTree = input.required<Species>();
 
-  @Input() speciesTree!: Species;
+  // Efficient computed signals replacing method re-evaluations in templates
+  readonly hasDirectSpecies = computed(() =>
+    this.speciesTree()?.children?.some((c) => c.rank === 'species') ?? false
+  );
 
-  hasDirectSpecies(): boolean {
-    return this.speciesTree?.children?.some(c => c.rank === 'species');
-  }
-  hasSubgenus(): boolean {
-    return this.speciesTree?.children?.some(c => c.rank === 'subgenus');
-  }
-
+  readonly hasSubgenus = computed(() =>
+    this.speciesTree()?.children?.some((c) => c.rank === 'subgenus') ?? false
+  );
 }

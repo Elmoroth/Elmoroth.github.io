@@ -1,20 +1,27 @@
 import { Injectable, signal } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BigmenuService {
-  // Reactive signal instead of Subject
-  private toggleState = signal(false);
+  /** Internal writable signal */
+  private readonly isOpenState = signal<boolean>(false);
 
-  // Expose as readonly if you don't want external modification
-  readonly toggleState$ = this.toggleState.asReadonly();
+  /** Read-only signal exposed to components */
+  readonly isOpen = this.isOpenState.asReadonly();
 
-  toggle() {
-    this.toggleState.update(val => !val);
+  /** Toggles menu state */
+  toggle(): void {
+    this.isOpenState.update((prev) => !prev);
   }
 
-  close() {
-    this.toggleState.set(false);
+  /** Opens the menu */
+  open(): void {
+    this.isOpenState.set(true);
+  }
+
+  /** Closes the menu */
+  close(): void {
+    this.isOpenState.set(false);
   }
 }

@@ -1,23 +1,23 @@
 export interface Species {
     rank: string,
-    parent: string,
+    parent?: string,
     name: string,
-    genus: string,
-    species: string,
-    englishName: string,
-    nederlands: string,
-    category: string,
-    authority: string,
-    notes: string,
-    rangeShort: string,
-    rangeDescription: string,
-    picture: string,
-    asset: string,
-    ebirdCode: string,
-    children: Species[],
-    countExtant: number,
-    countExtinct: number,
-    countFossil: number
+    genus?: string,
+    species?: string,
+    englishName?: string,
+    nederlands?: string,
+    category?: string,
+    authority?: string,
+    notes?: string,
+    rangeShort?: string,
+    rangeDescription?: string,
+    picture?: string,
+    asset?: string,
+    ebirdCode?: string,
+    children?: Species[],
+    countExtant?: number,
+    countExtinct?: number,
+    countFossil?: number
 }
 
 export interface Clade {
@@ -28,5 +28,5 @@ export interface Clade {
 export interface GoogleSheetResult {
     range: string,
     majorDimension: string,
-    values: string[]
+    values: any[][]
 }

@@ -1,29 +1,46 @@
 @let pt = partialtree();
 @let sp = species();
 
-<section class="speciestree">
-  @if(sp){
-  <div class="speciestreeblock">
-    <app-speciestree [speciesTree]="sp"></app-speciestree>
-  </div>
+<section class="speciestree-container">
+  <!-- Floating toggle button to hide/show tree sidebar -->
+  @if (pt) {
+    <button 
+      type="button" 
+      class="tree-toggle-btn" 
+      (click)="toggleTreeSidebar()"
+      [attr.aria-expanded]="showTreeSidebar()"
+    >
+      {{ showTreeSidebar() ? 'Hide Tree' : 'Show Tree' }}
+    </button>
   }
 
-  @if(pt){
-  <div class="partialfamilytree">
-    <div class="{{pt.rank}}" class="treeMenuItem">
-      <a routerLink="/clade/{{pt.main}}" fragment="{{pt.name}}">
-        @if(pt.picNum){
-        <figure class="treeMenuImage">
-          <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/{{pt.picNum}}/160" loading="lazy" />
-        </figure>
-        }
-
-        <span class="treeMenuLatin">{{pt.latin}}</span>
-        <span class="treeMenuEnglish">{{pt.english}}</span>
-      </a>
+  @if (sp) {
+    <div class="speciestreeblock" [class.full-width]="!showTreeSidebar() || !pt">
+      <app-speciestree [speciesTree]="sp"></app-speciestree>
     </div>
+  }
 
-    <app-familytree [familyTree]="pt"></app-familytree>
-  </div>
+  @if (pt && showTreeSidebar()) {
+    <aside class="partialfamilytree">
+      <div [class]="'treeMenuItem ' + pt.rank">
+        <a [routerLink]="['/clade', pt.main]" [fragment]="pt.name">
+          @if (pt.picNum) {
+            <figure class="treeMenuImage">
+              <img 
+                [src]="'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/' + pt.picNum + '/160'" 
+                [alt]="pt.english || pt.latin"
+                loading="lazy" 
+                decoding="async"
+              />
+            </figure>
+          }
+
+          <span class="treeMenuLatin">{{ pt.latin }}</span>
+          <span class="treeMenuEnglish">{{ pt.english }}</span>
+        </a>
+      </div>
+
+      <app-familytree [familyTree]="pt"></app-familytree>
+    </aside>
   }
 </section>

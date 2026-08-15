@@ -1,34 +1,41 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { FamilyTreeService } from '../familytree/familytree.service';
-import { FamilyMenu } from '../familytree/familytree';
+import { Component, ChangeDetectionStrategy, inject, ElementRef, HostListener } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
+import { catchError, of } from 'rxjs';
+import { FamilyTreeService } from '../familytree/familytree.service';
 import { BigmenuService } from './bigmenu.service';
 
 @Component({
   selector: 'app-bigmenu',
+  standalone: true,
+  imports: [RouterModule],
   templateUrl: './bigmenu.component.html',
   styleUrls: ['./bigmenu.component.css'],
-  imports: [RouterModule]
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BigmenuComponent implements OnInit {
-  familyMenu = signal<FamilyMenu[]>([]);
+export class BigmenuComponent {
+  private readonly elementRef = inject(ElementRef);
+  private readonly familyTreeService = inject(FamilyTreeService);
+  readonly menuService = inject(BigmenuService);
 
-  constructor(
-    private service: FamilyTreeService,
-    private menuservice: BigmenuService
-  ) { }
-
-  ngOnInit() {
-    this.service.getFamilyMenu().subscribe({
-      next: (data) => this.familyMenu.set(data),
-      error: (err) => {
+  readonly familyMenu = toSignal(
+    this.familyTreeService.getFamilyMenu().pipe(
+      catchError((err) => {
         console.error('Failed to load family menu', err);
-        this.familyMenu.set([]);
-      }
-    });
-  }
+        return of([]);
+      })
+    ),
+    { initialValue: [] }
+  );
 
-  toggle() {
-    this.menuservice.toggle();
+  /** Listens for clicks anywhere in the document */
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent): void {
+    const clickedInside = this.elementRef.nativeElement.contains(event.target as Node);
+    
+    // If the click happened outside this component, close the menu
+    if (!clickedInside) {
+      this.menuService.close();
+    }
   }
 }
